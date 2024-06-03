@@ -1,0 +1,202 @@
+<resources>
+    <string name="app_name">Wigwam</string>
+
+    <string name="appUpdate" translatable="false">Aludecor Finder needs an update !</string>
+    <string name="appUpdateInfo" translatable="false">To update this, download the latest version</string>
+
+    <string name="error_no_internet">No Internet Connection</string>
+    <string name="prime_member"><i><b>Valued </b></i> Partner</string>
+
+    <string name="styled_welcome_message">We are <b><i>so</i></b> glad to see you.</string>
+
+
+    <string-array name="Male"></string-array>
+
+    <string name="api_key">AIzaSyCRzd5UfSGJjdu_7MTFmgSj40TZwnf3ZEo</string>
+    <string name="first">
+This scheme would be part of “Beurer Together-Stronger” initiative of Beurer Group.\n
+    </string>
+
+    <string name="second">
+The scheme shall be initially available from 1st August 2017 and shall be valid till 31st March 2020.\n
+    </string>
+    <string name="third">
+This scheme is limited to Beurer copier paper only and cannot be clubbed with any other paper.\n
+    </string>
+    <string name="fourth">
+The scheme can be either extended or closed early at the sole discretion of the management. The participant shall have no right to challenge the discretion of the management.\n
+    </string>
+    <string name="six">
+This scheme shall be available only for the Channel Partner (Retailers, Stationers &amp; Jobbers) involved in sale of Beurer copier paper it shall not be applicable for dealers/distributors and consumers including the end consumer. However the scheme can be extended to other persons in future at the sole discretion of Beurer.\n
+    </string>
+    <string name="seven">
+
+The enrolling Channel Partner have to ensure that they furnish information in its true form and any misrepresented information will result in permanent disqualification, from the Scheme and all other schemes run by Beurer.\n
+    </string>
+    <string name="eight">
+Beurer reserves the right to change, modify, alter or close the scheme at any point of time without giving any reason(s) and intimation(s) for the same.\n
+    </string>
+    <string name="nine">
+Beurer reserves the right to disqualify any participant from the scheme and /or any other Company or Agency run program/scheme, without assigning any reason / intimation / justification thereof to the aggrieved Channel Partner or any other person.\n
+    </string>
+    <string name="ten">
+Beurer reserves the right for the computation of the reward mechanics, which shall be final, conclusive and binding on the Channel Partner and will not be liable to be disputed or questioned.\n
+    </string>
+    <string name="eleven">
+Channel Partner do not have the option to take CASH in lieu of any kind of rewards/incentives. The Points will be redeemed only against products, vouchers, bank/gift cards,PayTM or services as featured in the Rewards catalogue. Redemption of Reward Points against any outstanding or payments due to Company, Dealer, Distributor, Wholesaler, Retailer or any of the Channel Partner is not permissible.\n
+    </string>
+    <string name="twelve">
+All participating Channel Partner should compulsorily provide a Mobile Number /Contact Number. Beurer will not be responsible for any mails or text messages transmitted from those Mobile Numbers. The participant expressly waives off any right/title/interest in the information/mails/messages provided/sent by them including but not limited to right to privacy and intellectual property rights.\n
+    </string>
+    <string name="thirteen">
+Beurer or its representing agency will not be responsible for products or vouchers stolen, damaged or lost in transit and no other query would be entertained later related to dissatisfaction of gift once it is received.\n
+    </string>
+    <string name="fourtin">
+Product received in damaged condition should be reported within 24 hours. Beurer or its working agency will not be responsible for the same later on.\n
+    </string>
+    <string name="fifteen">
+Please check the availability of stores of any gift voucher before placing the order; Beurer or its working agency will not be responsible for any store unavailability later on.\n
+    </string>
+    <string name="sixteen">
+Channel Partners may redeem there gifts quarterly or annually. Redemption request once given to the agency or Beurer cannot be cancelled or withdrawn or changed. On redemption, the Rewards Points would automatically be subtracted from the accumulated balance.\n
+    </string>
+    <string name="seventeen">
+Goods will reach the Channel Partner within 4-6 weeks of receipt of the order subject to availability of funds. Notwithstanding the same, Beurer will not be held liable for any delay beyond this time period.\n
+    </string>
+    <string name="eighteen">
+It is expressly agreed that in case of any dispute whether direct or indirect arising out of the said scheme shall be governed by the laws of India and any dispute, difference or claim which may arise in connection with the said scheme hereto shall be only under the jurisdiction of the law courts of the city of Barnala, Punjab.\n
+    </string>
+    <string name="nineteen">
+For detailed terms and condition please refer our website\n
+   </string>
+
+    <string name="please_select_image">Please select image</string>
+
+
+    <!--Home-->
+    <string name="home">Home</string>
+    <string name="prime">Valued &#160;</string>
+    <string name="member">Partner</string>
+    <string name="welcome_to">Welcome to the rewarding work of Ramaply group</string>
+    <string name="scan">Scan</string>
+
+    <string name="wallet_balance">WALLET BALANCE</string>
+    <string name="total_earned">Total Earned Points</string>
+    <string name="balance_point">Balance Points</string>
+    <string name="point_redeem">Point Redeemed</string>
+    <string name="rewards_you_win">Rewards you can win</string>
+    <string name="view_details">View Details</string>
+    <string name="what_new">What\'s New</string>
+    <string name="ruby">Ruby</string>
+    <string name="Bronze">Bronze</string>
+    <string name="Prime_Points">Earn Points</string>
+    <string name="Rewards_Bonus">Rewards Bonus</string>
+    <string name="Redeemed_Points">Redeemed Points</string>
+    <string name="Watt">₹</string>
+    <string name="Address_Details">Address Details</string>
+    <string name="KYC_Details">KYC Details</string>
+    <string name="SAVE">SAVE</string>
+    <string name="my_rewards">My Rewards</string>
+
+
+    <string name="add_project_details">Add Project Details</string>
+    <string name="project_name">Project Name</string>
+    <string name="project_address">Project Address</string>
+    <string name="add_project_photos">Add Project Photos</string>
+    <string name="unlock_additional_points">Unlock additional 5 points by uploading your project site images</string>
+    <string name="upload_here">Upload here</string>
+    <string name="scan_code">Scan Code</string>
+    <string name="add">Add</string>
+    <string name="submit">Submit</string>
+    <string name="wallet">Wallet</string>
+    <string name="milestone">Milestone</string>
+    <string name="platinum">Platinum</string>
+    <string name="gold">Gold</string>
+    <string name="silver">Silver</string>
+    <string name="sapphire">Sapphire</string>
+    <string name="diamond">Diamond</string>
+    <string name="reward">Reward</string>
+    <string name="gifts">Gifts</string>
+    <string name="vouchers">Vouchers</string>
+    <string name="points">Points</string>
+
+    <string name="watt_to">&#160;₹ to &#160;</string>
+    <string name="level">&#160;Level</string>
+
+
+    <string name="add_to_cart">Add to Cart</string>
+    <string name="check_out">Check Out</string>
+    <string name="continue_shopping">Continue Shopping</string>
+    <string name="following_items_in_cart">You have following items in cart</string>
+    <string name="redeem_now">Redeem Now</string>
+    <string name="menu">Menu</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last Name</string>
+    <string name="firm_name">Firm Name</string>
+    <string name="dob">DOB</string>
+    <string name="doa">DOA</string>
+    <string name="contact_details">Contact Details</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="email_id">Email Id</string>
+    <string name="state">State</string>
+    <string name="district">District</string>
+    <string name="city">City</string>
+    <string name="pincode">Pincode</string>
+    <string name="pan_card_number">Pan Card Number</string>
+    <string name="aadhar_card_number">Aadhar Card Number</string>
+    <string name="gst_number">Driving Licence number</string>
+    <string name="other">Other</string>
+
+    <string name="welcome_message">Welcome to the rewarding \n world of Ramaply group</string>
+    <string name="No_Notifications_Available">No Notifications Available</string>
+    <string name="Edit">Edit</string>
+    <string name="GENERAL_DETAILS">പൊതുവായ വിശദാംശങ്ങൾ</string>
+    <string name="EDIT_PROFILE">പ്രൊഫൈൽ എഡിറ്റ് ചെയ്യുക</string>
+    <string name="View_Profile">വ്യക്തിവിവരങ്ങൾ കാണുക</string>
+    <string name="exciting_offers">ആവേശകരമായ ഓഫറുകൾ</string>
+    <string name="coming_soon">ഉടൻ വരുന്നു</string>
+    <string name="badges">ബാഡ്ജുകൾ</string>
+    <string name="Login">ലോഗിൻ</string>
+    <string name="Profile_Complete">പ്രൊഫൈൽ പൂർത്തിയായി</string>
+    <string name="First_Scan">ആദ്യ സ്കാൻ</string>
+    <string name="Champion">ചാമ്പ്യൻ</string>
+    <string name="Star">നക്ഷത്രം</string>
+    <string name="Super_Star">സൂപ്പർ സ്റ്റാർ</string>
+    <string name="Transaction_History">ഇടപാട് ചരിത്രം</string>
+    <string name="Leaderboard">ലീഡർബോർഡ്</string>
+    <string name="Spin_Win">സ്പിൻ ചെയ്ത് വിജയിക്കുക</string>
+    <string name="Raise_Ticket">ഒരു ടിക്കറ്റ് ഉയർത്തുക</string>
+    <string name="Ticket">ടിക്കറ്റ്</string>
+    <string name="Document_Verification">പ്രമാണ പരിശോധന</string>
+    <string name="Verification">സ്ഥിരീകരണം</string>
+    <string name="Raise_Request">ഒരു അഭ്യർത്ഥന ഉന്നയിക്കുക</string>
+    <string name="Notification">അറിയിപ്പ്</string>
+    <string name="Help_Support">സഹായസഹകരണങ്ങൾ</string>
+    <string name="Program_Booklet">പ്രോഗ്രാം ബുക്ക്ലെറ്റ്</string>
+    <string name="Frequently_Asked_Question">പതിവായി ചോദിക്കുന്ന ചോദ്യം</string>
+    <string name="Terms_Conditions">ഉപാധികളും നിബന്ധനകളും</string>
+    <string name="Contact_us">ഞങ്ങളെ സമീപിക്കുക</string>
+    <string name="Rate_us">പ്ലേ സ്റ്റോറിൽ ഞങ്ങളെ റേറ്റുചെയ്യുക</string>
+    <string name="Refer_Friend">ഒരു സുഹൃത്തിനെ റഫർ ചെയ്യുക</string>
+    <string name="Write_review">ഒരു അവലോകനം എഴുതുക</string>
+    <string name="Change_Language">ഭാഷ</string>
+    <string name="Logout">പുറത്തുകടക്കുക</string>
+    <string name="Offer_n_Win">ഓഫർ ചെയ്ത് വിജയിക്കുക</string>
+    <string name="POINTS_DETAILS">പോയിന്റ് വിശദാംശങ്ങൾ</string>
+    <string name="Program_Details">പ്രോഗ്രാം വിശദാംശങ്ങൾ</string>
+    <string name="Enter_Coupen">കൂപ്പൺ കോഡ് നൽകുക</string>
+    <string name="tv_Or_Scan">അല്ലെങ്കിൽ സ്കാൻ ചെയ്യുക</string>
+    <string name="Congrats">അഭിനന്ദനങ്ങൾ</string>
+    <string name="OK">ശരി</string>
+    <string name="YOU_HAVE_SUCCESSFULLY_UNLOCKED">നിങ്ങൾ വിജയകരമായി അൺലോക്ക് ചെയ്തു</string>
+
+
+    <string name="Home">വീട്</string>
+    <string name="Wallet">വാലറ്റ്</string>
+    <string name="Scan">സ്കാൻ ചെയ്യുക</string>
+    <string name="Purchase">വാങ്ങൽ</string>
+    <string name="Rewards">പ്രതിഫലം</string>
+    <string name="Menu">മെനു</string>
+
+
+</resources>

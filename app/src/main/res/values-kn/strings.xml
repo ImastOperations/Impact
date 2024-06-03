@@ -1,0 +1,200 @@
+<resources>
+    <string name="app_name">Wigwam</string>
+
+    <string name="error_no_internet">No Internet Connection</string>
+    <string name="prime_member"><i><b>PRIME </b></i> MEMBER</string>
+
+    <string name="styled_welcome_message">We are <b><i>so</i></b> glad to see you.</string>
+
+
+    <string-array name="Male">
+    </string-array>
+
+    <string name="api_key">AIzaSyCRzd5UfSGJjdu_7MTFmgSj40TZwnf3ZEo</string>
+    <string name="first">
+This scheme would be part of “Ramaply Together-Stronger” initiative of Ramaply Group.\n
+    </string>
+
+    <string name="second">
+The scheme shall be initially available from 1st August 2017 and shall be valid till 31st March 2020.\n
+    </string>
+    <string name="third">
+This scheme is limited to Ramaply copier paper only and cannot be clubbed with any other paper.\n
+    </string>
+    <string name="fourth">
+The scheme can be either extended or closed early at the sole discretion of the management. The participant shall have no right to challenge the discretion of the management.\n
+    </string>
+    <string name="six">
+This scheme shall be available only for the Channel Partner (Retailers, Stationers &amp; Jobbers) involved in sale of Ramaply copier paper it shall not be applicable for dealers/distributors and consumers including the end consumer. However the scheme can be extended to other persons in future at the sole discretion of Ramaply.\n
+    </string>
+    <string name="seven">
+
+The enrolling Channel Partner have to ensure that they furnish information in its true form and any misrepresented information will result in permanent disqualification, from the Scheme and all other schemes run by Ramaply.\n
+    </string>
+    <string name="eight">
+Ramaply reserves the right to change, modify, alter or close the scheme at any point of time without giving any reason(s) and intimation(s) for the same.\n
+    </string>
+    <string name="nine">
+Ramaply reserves the right to disqualify any participant from the scheme and /or any other Company or Agency run program/scheme, without assigning any reason / intimation / justification thereof to the aggrieved Channel Partner or any other person.\n
+    </string>
+    <string name="ten">
+Ramaply reserves the right for the computation of the reward mechanics, which shall be final, conclusive and binding on the Channel Partner and will not be liable to be disputed or questioned.\n
+    </string>
+    <string name="eleven">
+Channel Partner do not have the option to take CASH in lieu of any kind of rewards/incentives. The Points will be redeemed only against products, vouchers, bank/gift cards,PayTM or services as featured in the Rewards catalogue. Redemption of Reward Points against any outstanding or payments due to Company, Dealer, Distributor, Wholesaler, Retailer or any of the Channel Partner is not permissible.\n
+    </string>
+    <string name="twelve">
+All participating Channel Partner should compulsorily provide a Mobile Number /Contact Number. Ramaply will not be responsible for any mails or text messages transmitted from those Mobile Numbers. The participant expressly waives off any right/title/interest in the information/mails/messages provided/sent by them including but not limited to right to privacy and intellectual property rights.\n
+    </string>
+    <string name="thirteen">
+Ramaply or its representing agency will not be responsible for products or vouchers stolen, damaged or lost in transit and no other query would be entertained later related to dissatisfaction of gift once it is received.\n
+    </string>
+    <string name="fourtin">
+Product received in damaged condition should be reported within 24 hours. Ramaply or its working agency will not be responsible for the same later on.\n
+    </string>
+    <string name="fifteen">
+Please check the availability of stores of any gift voucher before placing the order; Ramaply or its working agency will not be responsible for any store unavailability later on.\n
+    </string>
+    <string name="sixteen">
+Channel Partners may redeem there gifts quarterly or annually. Redemption request once given to the agency or Ramaply cannot be cancelled or withdrawn or changed. On redemption, the Rewards Points would automatically be subtracted from the accumulated balance.\n
+    </string>
+    <string name="seventeen">
+Goods will reach the Channel Partner within 4-6 weeks of receipt of the order subject to availability of funds. Notwithstanding the same, Ramaply will not be held liable for any delay beyond this time period.\n
+    </string>
+    <string name="eighteen">
+It is expressly agreed that in case of any dispute whether direct or indirect arising out of the said scheme shall be governed by the laws of India and any dispute, difference or claim which may arise in connection with the said scheme hereto shall be only under the jurisdiction of the law courts of the city of Barnala, Punjab.\n
+    </string>
+    <string name="nineteen">
+For detailed terms and condition please refer our website\n
+   </string>
+
+    <string name="please_select_image">Please select image</string>
+
+
+
+
+
+
+    <!--Home-->
+    <string name="watt_to">&#160;वॉट से &#160;</string>
+    <string name="level">&#160;लेवल</string>
+    <string name="home">होम</string>
+    <string name="Edit">बदलाव करो</string>
+    <string name="GENERAL_DETAILS">सामान्य जानकारी</string>
+    <string name="EDIT_PROFILE">प्रोफाइल में बदलाव करे</string>
+    <string name="my_rewards">मेरे पुरस्कार</string>
+    <string name="wallet_balance">वॉलेट बेलेंस</string>`
+    <string name="prime">प्राईम &#160;</string>
+    <string name="member">मेम्बर</string>
+    <string name="total_earned">कुल अर्जित पॉइंट्स</string>
+    <string name="balance_point">शेष पॉइंट्स</string>
+    <string name="point_redeem">रिडीम्ड पॉइंट्स</string>
+    <string name="rewards_you_win">पुरस्कार जीतिए</string>
+    <string name="view_details">विवरण देखें</string>
+    <string name="what_new">नया क्या है</string>
+    <string name="ruby">रूबी</string>
+    <string name="Bronze">ब्रॉन्ज</string>
+    <string name="Prime_Points">अर्न पॉइंट्स</string>
+    <string name="Rewards_Bonus">पुरस्कृत बोनस</string>
+    <string name="Redeemed_Points">रिडीम्ड पॉइंट्स</string>
+    <string name="Watt">वॉट</string>
+    <string name="Address_Details">पते का विवरण</string>
+    <string name="KYC_Details">केवाईसी का विवरण</string>
+    <string name="SAVE">रक्षित करे</string>
+
+    <string name="welcome_message">आपका स्वागत हैं वारी ग्रु \n के लाभदायी कार्य में</string>
+    <string name="No_Notifications_Available">कोई सूचना नही हैं</string>
+    <string name="welcome_to">वारी ग्रुप के उपहारों की दुनिया में आपका स्वागत है </string>
+    <string name="scan">स्कैन</string>
+    <string name="add_project_details">प्रोजेक्ट डिटेल्स ऐड करे</string>
+    <string name="project_name">प्रोजेक्ट का नाम</string>
+    <string name="project_address">प्रोजेक्ट का एड्रेस</string>
+    <string name="add_project_photos">प्रोजेक्ट के फोटोज ऐड करे</string>
+    <string name="unlock_additional_points">अपनी प्रोजेक्ट साइट फोटोज को अपलोड करके अतिरिक्त 5 पॉइंट अनलॉक करें</string>
+    <string name="upload_here">यहाँ अपलोड करें</string>
+    <string name="scan_code">कोड स्कैन करे</string>
+    <string name="add">और कोड जोड़े</string>
+    <string name="submit">ಸಲ್ಲಿಸುे</string>
+    <string name="wallet">वॉलेट</string>
+    <string name="milestone">माइलस्टोन</string>
+    <string name="platinum">प्लैटिनम</string>
+    <string name="gold">गोल्ड </string>
+    <string name="silver">सिल्वर</string>
+    <string name="sapphire">सफायर</string>
+    <string name="diamond">डायमंड </string>
+    <string name="reward">पुरस्कार</string>
+    <string name="gifts">गिफ्ट्स</string>
+    <string name="vouchers">वाउचर्स</string>
+    <string name="points">पॉइंट्स</string>
+
+    <string name="add_to_cart">कार्ट में ऐड करे</string>
+    <string name="check_out">चेक आउट</string>
+    <string name="continue_shopping">खरीदारी जारी रखें</string>
+    <string name="following_items_in_cart">आपके पास कार्ट में निम्नलिखित आइटम हैं</string>
+    <string name="redeem_now">रिडीम करे</string>
+    <string name="menu">मेन्यू</string>
+    <string name="first_name">पहला नाम</string>
+    <string name="last_name">उपनाम</string>
+    <string name="firm_name">फर्म का नाम</string>
+    <string name="dob">जन्म की तारीख</string>
+    <string name="doa">शादी की सालगिरह की तारीख</string>
+    <string name="contact_details">सम्पर्क करने का विवरण</string>
+    <string name="mobile_number">मोबाइल नंबर</string>
+    <string name="email_id">ईमेल आईडी</string>
+    <string name="state">राज्य</string>
+    <string name="district">जिला</string>
+    <string name="city">शहर</string>
+    <string name="pincode">पिन कोड</string>
+    <string name="pan_card_number">पैन कार्ड नंबर</string>
+    <string name="aadhar_card_number">आधार कार्ड नंबर</string>
+    <string name="gst_number">ड्राइविंग लाइसेंस नंबर</string>
+    <string name="other">अन्य</string>
+
+    <string name="exciting_offers">ಅತ್ಯಾಕರ್ಷಕ ಕೊಡುಗೆಗಳು</string>
+    <string name="coming_soon">ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ</string>
+    <string name="badges">ಬ್ಯಾಡ್ಜ್‌ಗಳು</string>
+    <string name="Login">ಲಾಗಿನ್</string>
+    <string name="Profile_Complete">ಪ್ರೊಫೈಲ್ ಪೂರ್ಣಗೊಂಡಿದೆ</string>
+    <string name="First_Scan">ಮೊದಲ ಸ್ಕ್ಯಾನ್</string>
+    <string name="Champion">ಚಾಂಪಿಯನ್</string>
+    <string name="Star">ನಕ್ಷತ್ರ</string>
+    <string name="Super_Star">ಸುಪರ್ ಸ್ಟಾರ್</string>
+    <string name="Transaction_History">ವಹಿವಾಟಿನ ಇತಿಹಾಸ</string>
+    <string name="Leaderboard">ಲೀಡರ್ಬೋರ್ಡ್</string>
+    <string name="Spin_Win">ಸ್ಪಿನ್ ಮತ್ತು ಗೆಲ್ಲಲು</string>
+    <string name="Raise_Ticket">ಟಿಕೆಟ್ ಹೆಚ್ಚಿಸಿ</string>
+    <string name="Ticket">ಟಿಕೆಟ್</string>
+    <string name="Document_Verification">ದಾಖಲೆ ಪರಿಶೀಲನೆ</string>
+    <string name="Verification">ಪರಿಶೀಲನೆ</string>
+    <string name="Raise_Request">ಸಲ್ಲಿಕೆ</string>
+    <string name="Notification">ಅಧಿಸೂಚನೆ</string>
+    <string name="Help_Support">ಸಹಾಯ ಮತ್ತು ಬೆಂಬಲ</string>
+    <string name="Program_Booklet">ಕಾರ್ಯಕ್ರಮದ ಕಿರುಪುಸ್ತಕ</string>
+    <string name="Frequently_Asked_Question">ಪದೇ ಪದೇ ಕೇಳಲಾಗುವ ಪ್ರಶ್ನೆ</string>
+    <string name="Contact_us">ಸಂಪರ್ಕಿಸಿ</string>
+    <string name="Rate_us">ಪ್ಲೇ ಸ್ಟೋರ್‌ನಲ್ಲಿ ನಮಗೆ ರೇಟ್ ಮಾಡಿ</string>
+    <string name="Refer_Friend">ಸ್ನೇಹಿತನನ್ನು ಆಹ್ವಾನಿಸಿ</string>
+    <string name="Write_review">ವಿಮರ್ಶೆಯನ್ನು ಬರೆ</string>
+    <string name="Terms_Conditions">ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತುಗಳು</string>
+    <string name="Change_Language">ಭಾಷೆ ಬದಲಾಯಿಸಿ</string>
+    <string name="Logout">ಲಾಗ್ ಔಟ್</string>
+    <string name="View_Profile">ಪ್ರೊಫೈಲ್ ವೀಕ್ಷಿಸಿ</string>
+    <string name="Offer_n_Win">ಬಿಡ್ ಮತ್ತು ಗೆಲ್ಲಲು</string>
+    <string name="POINTS_DETAILS">ಸಂಚಿಕೆ ಹೇಳಿಕೆ</string>
+    <string name="Program_Details">ಕಾರ್ಯಕ್ರಮದ ವಿವರಣೆ</string>
+    <string name="Enter_Coupen">ಕೂಪನ್ ಕೋಡ್ ನಮೂದಿಸಿ</string>
+    <string name="tv_Or_Scan">ಅಥವಾ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
+    <string name="Congrats">ಅಭಿನಂದನೆಗಳು!</string>
+    <string name="OK">ಸರಿ</string>
+    <string name="YOU_HAVE_SUCCESSFULLY_UNLOCKED">ನೀವು ಯಶಸ್ವಿಯಾಗಿ ಅನ್‌ಲಾಕ್ ಮಾಡಿರುವಿರಿ</string>
+
+    <string name="Home">ಮನೆ</string>
+    <string name="Wallet">ಕೈಚೀಲ</string>
+    <string name="Scan">ಸ್ಕ್ಯಾನ್</string>
+    <string name="Rewards">ಪ್ರತಿಫಲಗಳು</string>
+    <string name="Menu">ಮೆನು</string>
+    <string name="Purchase">ಖರೀದಿ</string>
+
+</resources>
+
+

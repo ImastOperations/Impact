@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Choose Language"
+            android:textColor="#000"
+            android:layout_marginLeft="20dp"
+            android:textSize="22sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                android:layout_height="100dp">
+
+                <RelativeLayout
+                    android:id="@+id/relativeEnglish"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="0dp"
+                    android:background="@drawable/rectangle_select"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvEnglish"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="English"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/imgEnglish"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/ic_radio_button" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeHindi"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    android:layout_marginRight="20dp"
+                    android:layout_width="0dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/rectangle_unselect"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvHindi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="हिन्दी"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvHindi2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvHindi"
+                        android:layout_marginLeft="10dp"
+                        android:text="Hindi"
+                        android:textColor="#000"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/imgHindi"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/iuc_radio_button_unselect"
+                        />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:weightSum="2"
+                android:visibility="visible"
+                android:orientation="horizontal"
+                android:layout_height="100dp">
+
+                <RelativeLayout
+                    android:id="@+id/relativeTamil"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="0dp"
+                    android:background="@drawable/rectangle_unselect"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvTamil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="தமிழ்"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvTamil2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvTamil"
+                        android:layout_marginLeft="10dp"
+                        android:text="Tamil"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/imgTamil"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/iuc_radio_button_unselect" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_marginRight="20dp"
+                    android:layout_width="0dp"
+                    android:id="@+id/relativeTelugu"
+                    android:background="@drawable/rectangle_unselect"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvTelugu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="తెలుగు"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvTelugu2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvTelugu"
+                        android:layout_marginLeft="10dp"
+                        android:text="Telugu"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/imgTelugu"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/iuc_radio_button_unselect" />
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:weightSum="2"
+                android:visibility="visible"
+                android:orientation="horizontal"
+                android:layout_height="100dp">
+
+                <RelativeLayout
+                    android:id="@+id/relativeKannada"
+                    android:layout_weight="0.92"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="0dp"
+                    android:background="@drawable/rectangle_unselect"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvKannada"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="ಕನ್ನಡ"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvKannada2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvKannada"
+                        android:layout_marginLeft="10dp"
+                        android:text="Kannada"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/imgKannada"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/iuc_radio_button_unselect" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:visibility="visible"
+                    android:id="@+id/relativeMalayalam"
+                    android:background="@drawable/rectangle_unselect"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvMalayalam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="മലയാളം"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Malayalam"
+                        android:textSize="12sp"
+                        android:id="@+id/tvMalayalam2"
+                        android:layout_below="@+id/tvMalayalam"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/black"/>
+
+                    <ImageView
+                        android:id="@+id/imgMalayalam"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/iuc_radio_button_unselect" />
+
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:weightSum="2"
+                android:visibility="visible"
+                android:orientation="horizontal"
+                android:layout_height="100dp">
+
+                <RelativeLayout
+                    android:id="@+id/relativeBangla"
+                    android:layout_weight="0.92"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="0dp"
+                    android:background="@drawable/rectangle_unselect"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvBangla"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="বাংলা"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvBangla2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvBangla"
+                        android:layout_marginLeft="10dp"
+                        android:text="Bangla"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/imgBangla"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/iuc_radio_button_unselect" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:visibility="gone"
+                    android:id="@+id/relativeSpanish"
+                    android:background="@drawable/rectangle_unselect"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvSpanish"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="മലയാളം"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Malayalam"
+                        android:textSize="12sp"
+                        android:id="@+id/tvSpanish2"
+                        android:layout_below="@+id/tvSpanish"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="@color/black"/>
+
+                    <ImageView
+                        android:id="@+id/imgSpanish"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/iuc_radio_button_unselect" />
+
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Continue"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>
