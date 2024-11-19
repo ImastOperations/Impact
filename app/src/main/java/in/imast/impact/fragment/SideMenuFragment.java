@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,7 +21,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
-import in.imast.impact.BuildConfig;
 import in.imast.impact.Connection.APIResultLitener;
 import in.imast.impact.Connection.ApiClient;
 import in.imast.impact.R;
@@ -30,9 +31,9 @@ import in.imast.impact.activity.NotificationActivity;
 import in.imast.impact.activity.WebPageActivity;
 import in.imast.impact.databinding.FragmentSideMenuBinding;
 import in.imast.impact.helper.DialogClass;
+import in.imast.impact.helper.PackageAppName;
 import in.imast.impact.helper.StaticSharedpreference;
 import in.imast.impact.helper.Utilities;
-;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.JsonObject;
 
@@ -70,6 +71,9 @@ public class SideMenuFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        packageName();
+
         try {
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_side_menu, container, false);
             parentView = binding.getRoot();
@@ -88,8 +92,8 @@ public class SideMenuFragment extends Fragment {
         } else {
             binding.ivLogo.setImageDrawable(getResources().getDrawable(R.drawable.banner_update));
         }
-
-        String appVersion = BuildConfig.VERSION_NAME;
+        PackageAppName packageAppName = new PackageAppName(getContext());
+        String appVersion = packageAppName.getVersion() + " (" + packageAppName.getVersionName() + ")";
         binding.tvVersion.setText("App Version " + appVersion);
 
         try {
@@ -128,7 +132,7 @@ public class SideMenuFragment extends Fragment {
                 intent.putExtra("from", "");
                 intent.putExtra("url", ApiClient.WEB_BASE_URL + "spin-and-win");
                 intent.putExtra("title", "Spin and Win");
-                //  intent.putExtra("url","http://jaisarathi.com/wallet-show?customer_id=1262");
+
                 startActivity(intent);
             }
         });
@@ -137,14 +141,13 @@ public class SideMenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                onClickWallet.onWallet();
+                //onClickWallet.onWallet();
 
-              /*  Intent intent = new Intent(getActivity(), WebPageActivity.class);
+                Intent intent = new Intent(getActivity(), WebPageActivity.class);
                 intent.putExtra("from", "");
                 intent.putExtra("url", ApiClient.WEB_BASE_URL + "transaction");
                 intent.putExtra("title", "Wallet");
-                //  intent.putExtra("url","http://jaisarathi.com/wallet-show?customer_id=1262");
-                startActivity(intent);*/
+                startActivity(intent);
             }
         });
 
@@ -155,7 +158,6 @@ public class SideMenuFragment extends Fragment {
                 intent.putExtra("from", "");
                 intent.putExtra("url", ApiClient.WEB_BASE_URL + "leaderboard");
                 intent.putExtra("title", "Leader Board");
-                //  intent.putExtra("url","http://jaisarathi.com/wallet-show?customer_id=1262");
                 startActivity(intent);
             }
         });
@@ -165,9 +167,30 @@ public class SideMenuFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), WebPageActivity.class);
                 intent.putExtra("from", "");
+                intent.putExtra("url", ApiClient.WEB_BASE_URL + "program-booklet");
+                intent.putExtra("title", "Program Booklet");
+                startActivity(intent);
+            }
+        });
+
+        binding.linearProgramCatlouge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WebPageActivity.class);
+                intent.putExtra("from", "");
                 intent.putExtra("url", ApiClient.WEB_BASE_URL + "product-catlogue");
                 intent.putExtra("title", "Program Booklet");
-                //  intent.putExtra("url","http://jaisarathi.com/wallet-show?customer_id=1262");
+                startActivity(intent);
+            }
+        });
+
+        binding.linearProgramtds.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WebPageActivity.class);
+                intent.putExtra("from", "");
+                intent.putExtra("url", ApiClient.WEB_BASE_URL + "technical-data-sheet");
+                intent.putExtra("title", "TDS");
                 startActivity(intent);
             }
         });
@@ -362,45 +385,11 @@ public class SideMenuFragment extends Fragment {
     }
 
 
-    private void handleThread() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dialog.dismiss();
-            }
-        }, SPLASH_DELAY * 900);
+    private void packageName()
+    {
+
     }
 
-    private class CustomWebViewClient extends WebViewClient {
-        public CustomWebViewClient() {
-            dialogClass = new DialogClass();
-            dialog = dialogClass.progresesDialog(getActivity());
-        }
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-            view.loadUrl(url);
-            return true;
-        }
-
-        @Override
-        public void onPageStarted(WebView webview, String url, Bitmap favicon) {
-            Log.v("akram", "url2" + url);
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            Log.v("akram", "url3" + url);
-            //dialog.dismiss();
-            //checkUrl = url;
-            super.onPageFinished(view, url);
-        }
-    }
-
-    public void setWalletListener(OnClickWallet onClickWallet) {
-        this.onClickWallet = onClickWallet;
-    }
 
     public interface OnClickWallet {
         public void onWallet();

@@ -1,14 +1,19 @@
 package in.imast.impact.activity;
 
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.DownloadListener;
+import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -77,12 +82,12 @@ public class WebPageActivity extends AppCompatActivity {
         headers.put("Authorization", acToken);
         headers.put("Accept-Language", StaticSharedpreference.getInfo("language",this));
 
-        Log.v("akram", "auth token " + acToken);
         myWebView.loadUrl(getIntent().getStringExtra("url"), headers);
 
         myWebView.getSettings().setJavaScriptEnabled(true);
         WebSettings ws = myWebView.getSettings();
         ws.setJavaScriptEnabled(true);
+
 
         //After Changed to SDK 33
         myWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
@@ -90,6 +95,32 @@ public class WebPageActivity extends AppCompatActivity {
         ws.setLoadsImagesAutomatically(true);
         //ws.getMixedContentMode();
         ws.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+
+        // Set Download Listener
+        myWebView.setDownloadListener(new DownloadListener() {
+            @Override
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+                String fileName = URLUtil.guessFileName(url, contentDisposition, mimetype);
+
+                if (fileName.endsWith(".bin") || mimetype.equalsIgnoreCase("application/octet-stream")) {
+                    fileName = fileName.replace(".bin", ".pdf"); // Ensure correct extension
+                }
+
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+                request.setMimeType(mimetype);
+                request.addRequestHeader("User-Agent", userAgent);
+                request.setDescription("Downloading file...");
+                request.setTitle(fileName);
+                request.allowScanningByMediaScanner();
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+
+                DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                if (downloadManager != null) {
+                    downloadManager.enqueue(request);
+                }
+            }
+        });
 
 
         btnTryAgain.setOnClickListener(new View.OnClickListener() {

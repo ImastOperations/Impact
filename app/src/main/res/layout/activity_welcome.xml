@@ -84,7 +84,6 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="REGISTER"
-                android:visibility="gone"
                 android:layout_marginTop="10dp"
                 android:textAllCaps="false"
                 android:textColor="@color/white"

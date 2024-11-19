@@ -3,22 +3,22 @@ package in.imast.impact.Connection;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.fragment.app.FragmentActivity;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-
 import in.imast.impact.model.CustomerModel;
 import in.imast.impact.model.LoginResponse;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
 import in.imast.impact.model.MasterProductReqModel;
 import okhttp3.Interceptor;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -29,11 +29,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static String BASE_API_URL = "https://savitriwoodsqa.imast.in/api/";
+    public static String BASE_API_URL = "https://impact.imast.in/api/";
 
-    public static String BASE_IMAGE_URL = "https://savitriwoodsqa.imast.in/api/v1/";
+    public static String BASE_IMAGE_URL = "https://impact.imast.in/api/v1/";
 
-    public static String WEB_BASE_URL = "https://savitriwoodsqa.imast.in/api/v1/";
+    public static String WEB_BASE_URL = "https://impact.imast.in/api/v1/";
     static Context context;
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
     private static HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -145,6 +145,37 @@ public class ApiClient {
         });
     }
 
+    public static void get_distributer(String header, Map<String, String> queryParams, final APIResultLitener<JsonObject> resultLitener, FragmentActivity activity) {
+        Call<JsonObject> apiResponseCall = getBaseApiServiceInstance1().get_distributer(header, queryParams);
+        apiResponseCall.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, retrofit2.Response<JsonObject> response) {
+                resultLitener.onAPIResult(response, null);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                resultLitener.onAPIResult(null, t.getMessage());
+            }
+        });
+    }
+    public static void get_area_sales(String header, Map<String, String> queryParams, final APIResultLitener<JsonObject> resultLitener, FragmentActivity activity) {
+        Call<JsonObject> apiResponseCall = getBaseApiServiceInstance1().get_area_sales(header, queryParams);
+        apiResponseCall.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, retrofit2.Response<JsonObject> response) {
+                resultLitener.onAPIResult(response, null);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                resultLitener.onAPIResult(null, t.getMessage());
+            }
+        });
+    }
+
+
+
 
     public static void retailerLogin(Map<String, String> queryParams, final APIResultLitener<LoginResponse> resultLitener, Context mContext) {
         context = mContext;
@@ -201,8 +232,8 @@ public class ApiClient {
             }
         });
     }
-    public static void logout
-            (String header, Map<String, String> queryParams, final APIResultLitener<JsonObject> resultLitener, Context mContext) {
+
+    public static void logout(String header, Map<String, String> queryParams, final APIResultLitener<JsonObject> resultLitener, Context mContext) {
         context = mContext;
         Call<JsonObject> apiResponseCall = getBaseApiServiceInstance1().logout
                 (header, queryParams);
@@ -332,10 +363,62 @@ public class ApiClient {
         });
     }
 
+    public static void add_invoice(String header, RequestBody distributer_id, RequestBody asm_id, RequestBody invoice_number,
+                                    RequestBody invoice_date, MultipartBody.Part parts, final APIResultLitener<JsonObject> resultLitener, Context mContext) {
+        Call<JsonObject> apiResponseCall = getBaseApiServiceInstance1().add_invoice(header, distributer_id, asm_id, invoice_number, invoice_date,
+                parts);
+        apiResponseCall.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, retrofit2.Response<JsonObject> response) {
+                resultLitener.onAPIResult(response, null);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                resultLitener.onAPIResult(null, t.getMessage());
+            }
+        });
+    }
+
+//    public static void saveinvoice(String header, MultipartBody.Part queryParams, final APIResultLitener<JsonObject> resultLitener) {
+//        Call<JsonObject> apiResponseCall = getBaseApiServiceInstance1().saveinvoice(header, queryParams);
+//
+//        apiResponseCall.enqueue(new Callback<JsonObject>() {
+//            @Override
+//            public void onResponse(Call<JsonObject> call, retrofit2.Response<JsonObject> response) {
+//
+//                resultLitener.onAPIResult(response, null);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<JsonObject> call, Throwable t) {
+//                resultLitener.onAPIResult(null, t.getMessage());
+//            }
+//        });
+//    }
+
+
     public static void saveInvoice
             (String header, MasterProductReqModel queryParams, final APIResultLitener<JsonObject> resultLitener, Context mContext) {
         context = mContext;
         Call<JsonObject> apiResponseCall = getBaseApiServiceInstance1().saveInvoice(header, queryParams);
+
+        apiResponseCall.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, retrofit2.Response<JsonObject> response) {
+
+                resultLitener.onAPIResult(response, null);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                resultLitener.onAPIResult(null, t.getMessage());
+            }
+        });
+    }
+
+    public static void getNotification(String header, final APIResultLitener<JsonObject> resultLitener) {
+        Call<JsonObject> apiResponseCall = getBaseApiServiceInstance1().getNotification(header);
 
         apiResponseCall.enqueue(new Callback<JsonObject>() {
             @Override

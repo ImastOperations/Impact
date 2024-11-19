@@ -10,9 +10,14 @@ public class LoginResponse {
     @Expose
     private Integer success;
 
-  @SerializedName("access_token")
+    @SerializedName("access_token")
     @Expose
-     String access_token;
+    String access_token;
+
+    @SerializedName("verifey")
+    private String verifey;
+
+
 
 
     @SerializedName("user_details")
@@ -22,6 +27,11 @@ public class LoginResponse {
     public String getAccess_token() {
         return access_token;
     }
+
+    public String getVerifey() {
+        return verifey;
+    }
+
 
     public Integer getSuccess() {
         return success;
@@ -36,7 +46,7 @@ public class LoginResponse {
         @SerializedName("id")
         @Expose
         private Integer id;
-          @SerializedName("customer_id")
+        @SerializedName("customer_id")
         @Expose
         private Integer customer_id;
         @SerializedName("name")
@@ -44,7 +54,7 @@ public class LoginResponse {
         private String name;
         @SerializedName("email")
         @Expose
-        private String email="";
+        private String email = "";
         @SerializedName("username")
         @Expose
         private String mobile;
@@ -113,37 +123,39 @@ public class LoginResponse {
         @Expose
         private String dob;
 
-       @SerializedName("date_of_anniversary")
+        @SerializedName("date_of_anniversary")
         @Expose
         private String doa;
 
-       @SerializedName("marital_status")
+        @SerializedName("marital_status")
         @Expose
         private String maritalStatus;
 
-    @SerializedName("gst")
+        @SerializedName("gst")
         @Expose
         private String gst;
 
-    @SerializedName("pan")
+        @SerializedName("pan")
         @Expose
         private String pan;
 
-    @SerializedName("aadhar_no")
+        @SerializedName("aadhar_no")
         @Expose
         private String adhar;
 
-    @SerializedName("other_id_name")
+        @SerializedName("other_id_name")
         @Expose
         private String other;
 
-    @SerializedName("paytm_no")
+        @SerializedName("paytm_no")
         @Expose
         private String paytm_no;
 
-    @SerializedName("pan_no")
+        @SerializedName("pan_no")
         @Expose
         private String pan_no;
+
+
 
 
         public Integer getCustomer_id() {
@@ -201,6 +213,7 @@ public class LoginResponse {
         public String getMobile() {
             return mobile;
         }
+
 
         public Object getAvatar() {
             return avatar;
@@ -281,5 +294,8 @@ public class LoginResponse {
         public String getAccessToken() {
             return accessToken;
         }
+
+
+
     }
 }

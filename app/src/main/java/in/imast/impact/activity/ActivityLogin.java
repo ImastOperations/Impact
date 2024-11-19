@@ -307,6 +307,7 @@ public class ActivityLogin extends AppCompatActivity implements OnKeyboardVisibi
                         Type listType = new TypeToken<LoginResponse.UserInfo>() {
                         }.getType();
 
+
                         String specialization = gson.toJson(UserInfo);
                         StaticSharedpreference.saveInfo("customerType", UserInfo.getCustomerType() + "", ActivityLogin.this);
                         StaticSharedpreference.saveInfo("UserId", UserInfo.getCustomer_id() + "", ActivityLogin.this);
@@ -316,16 +317,22 @@ public class ActivityLogin extends AppCompatActivity implements OnKeyboardVisibi
                         StaticSharedpreference.saveInfo("AccessToken", "Bearer " + response.body().getAccess_token() + "", ActivityLogin.this);
                         StaticSharedpreference.saveInfo("mobile", UserInfo.getMobile() + "", ActivityLogin.this);
 
-
-                        StaticSharedpreference.saveInfo("mobile", UserInfo.getMobile() + "", ActivityLogin.this);
+                         StaticSharedpreference.saveInfo("user_verify",  response.body().getVerifey()+ "", ActivityLogin.this);
 
                         if (UserInfo.getEmail() != null)
                             StaticSharedpreference.saveInfo("email", UserInfo.getEmail() + "", ActivityLogin.this);
 
+                        if(StaticSharedpreference.getInfo("user_verify", ActivityLogin.this).equalsIgnoreCase("true"))
+                        {
+                            startActivity(new Intent(ActivityLogin.this, MainActivity.class)
+                                    .putExtra("status",""));
+                            finishAffinity();
+                        }
+                        else{
+                            DialogClass.alertDialog("Verify", "Your account is under review and will be activated soon. Please try again later.", ActivityLogin.this, true);
+                        }
 
-                        startActivity(new Intent(ActivityLogin.this, MainActivity.class)
-                                .putExtra("status",""));
-                        finishAffinity();
+
                         //getCustomer();
 
                         // dialogClass.alertDialogMsg(getString(R.string.success), getString(R.string.enter_email), SignInActivity.this, false);
@@ -348,94 +355,6 @@ public class ActivityLogin extends AppCompatActivity implements OnKeyboardVisibi
             }
         }, this);
     }
-
-    /*private void getCustomer() {
-        if (!utilities.isOnline())
-            return;
-        dialog = dialogClass.progresesDialog(this);
-
-        Map<String, String> queryParams = new HashMap<String, String>();
-        queryParams.put("user_id", "" + StaticSharedpreference.getInfo("UserId", this));
-
-        ApiClient.getCustomer("" + StaticSharedpreference.getInfo("AccessToken", this),
-                "" + StaticSharedpreference.getInfo("UserId", this), new APIResultLitener<JsonObject>() {
-                    @Override
-                    public void onAPIResult(Response<JsonObject> response, String errorMessage) {
-                        if (response != null && errorMessage == null) {
-                            if (response.code() == 200) {
-                                JsonObject json = response.body().get("data").getAsJsonObject();
-
-
-                                if (json.get("media").getAsJsonArray().size() > 0) {
-
-                                    StaticSharedpreference.saveInfo("profileImage", ApiClient.BASE_IMAGE_URL + "/"
-                                            + json.get("media").getAsJsonArray().get(0).getAsJsonObject().
-                                            get("id").getAsString() + "/"
-                                            + json.get("media").getAsJsonArray().get(0).getAsJsonObject().
-                                            get("file_name").getAsString(), ActivityLogin.this);
-                                }
-
-                                try {
-                                   String fName = "";
-                                   String lName = "";
-                                    try {
-                                        fName = json.get("owner_first_name").getAsString();
-                                    } catch (Exception e) {
-                                        fName = "";
-                                        e.printStackTrace();
-                                    }
-
-                                    try {
-                                        lName = json.get("owner_last_name").getAsString();
-                                    } catch (Exception e) {
-                                        lName = "";
-                                        e.printStackTrace();
-                                    }
-
-                                    StaticSharedpreference.saveInfo("name", fName
-                                            + " " + lName, ActivityLogin.this);
-
-                                    String fNameChar = "";
-                                    String lNameChar = "";
-
-                                    if(!TextUtils.isEmpty(fName))
-                                        fNameChar = fName.toUpperCase().charAt(0)+"";
-
-                                    if(!TextUtils.isEmpty(lName))
-                                        lNameChar = lName.toUpperCase().charAt(0)+"";
-
-                                    StaticSharedpreference.saveInfo("heading", fNameChar + "" +
-                                            lNameChar, ActivityLogin.this);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-
-                                StaticSharedpreference.saveInfo("cityId",
-                                        json.get("customer_city").getAsJsonObject().get("id").getAsInt() + "", ActivityLogin.this);
-
-                                startActivity(new Intent(ActivityLogin.this, MainActivity.class));
-                                finishAffinity();
-                            } else {
-                                dialog.dismiss();
-
-                                JSONObject jsonObject = null;
-                                try {
-                                    jsonObject = new JSONObject(response.errorBody().string());
-
-                                    dialogClass.alertDialog(jsonObject.getString("status"), jsonObject.getString("message")
-                                            , ActivityLogin.this, false);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-
-                                }
-                            }
-                        } else {
-                            dialog.dismiss();
-
-                        }
-                    }
-                });
-    }*/
 
 
     private int dotscount;

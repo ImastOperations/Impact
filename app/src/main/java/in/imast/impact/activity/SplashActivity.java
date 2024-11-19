@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.google.android.play.core.appupdate.AppUpdateManager;
-
 import in.imast.impact.R;
 
 import in.imast.impact.helper.StaticSharedpreference;
@@ -17,7 +15,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private AppUpdateManager appUpdateManager;
     private static final int IMMEDIATE_APP_UPDATE_REQ_CODE = 124;
     String newFcmToken;
     @Override
@@ -42,7 +39,8 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (!StaticSharedpreference.getInfo("AccessToken",SplashActivity.this).equals("")){
+                if (!StaticSharedpreference.getInfo("AccessToken",SplashActivity.this).equals("")
+                && StaticSharedpreference.getInfo("user_verify", SplashActivity.this).equalsIgnoreCase("true")){
                     startActivity(new Intent(SplashActivity.this,MainActivity.class)
                             .putExtra("status",""));
                     finish();

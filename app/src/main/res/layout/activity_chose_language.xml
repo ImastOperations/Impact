@@ -342,33 +342,34 @@
 
                 </RelativeLayout>
 
+
                 <RelativeLayout
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginLeft="10dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:id="@+id/relativeSpanish"
                     android:background="@drawable/rectangle_unselect"
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/tvSpanish"
+                        android:id="@+id/tvmarathi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="മലയാളം"
+                        android:text="मराठी"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Malayalam"
+                        android:text="Marathi"
                         android:textSize="12sp"
                         android:id="@+id/tvSpanish2"
-                        android:layout_below="@+id/tvSpanish"
+                        android:layout_below="@+id/tvmarathi"
                         android:layout_marginLeft="10dp"
                         android:textColor="@color/black"/>
 

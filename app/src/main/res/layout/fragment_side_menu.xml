@@ -324,7 +324,7 @@
                         android:layout_height="wrap_content"
                         android:text="OFFER AND WIN"
                         android:textColor="#999999"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -373,7 +373,7 @@
                             android:layout_marginStart="10dp"
                             android:text="@string/badges"
                             android:textColor="#000"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -397,7 +397,7 @@
                             android:layout_marginStart="10dp"
                             android:text="@string/Spin_Win"
                             android:textColor="#000"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -424,7 +424,7 @@
                         android:layout_height="wrap_content"
                         android:text="POINTS DETAILS"
                         android:textColor="#999999"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <LinearLayout
                         android:id="@+id/linearWallet"
@@ -447,7 +447,7 @@
                             android:layout_marginStart="10dp"
                             android:text="@string/Wallet"
                             android:textColor="#000"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -497,7 +497,7 @@
                             android:layout_marginStart="10dp"
                             android:text="@string/Leaderboard"
                             android:textColor="#000"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -523,7 +523,7 @@
                         android:layout_height="wrap_content"
                         android:text="PROGRAM DETAILS"
                         android:textColor="#999999"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <LinearLayout
                         android:id="@+id/linearProgramBooklet"
@@ -537,16 +537,67 @@
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center"
-                            android:background="@drawable/ic_booklet" />
+                            android:src="@drawable/ic_program_booklet" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="10dp"
-                            android:text="Product Catlouge"
+                            android:text="@string/Program_Booklet"
                             android:textColor="#000"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/linearProgramCatlouge"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/ic_catalogue" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:text="Catalog"
+                            android:textColor="#000"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearProgramtds"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/ic_tds" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="10dp"
+                            android:text="TDS"
+                            android:textColor="#000"
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -571,7 +622,7 @@
                             android:layout_marginStart="10dp"
                             android:text="@string/Frequently_Asked_Question"
                             android:textColor="#000"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
 
@@ -596,7 +647,7 @@
                             android:layout_marginStart="10dp"
                             android:text="@string/Terms_Conditions"
                             android:textColor="#000"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
                     <LinearLayout
@@ -619,7 +670,7 @@
                             android:layout_marginStart="10dp"
                             android:text="@string/Contact_us"
                             android:textColor="#000"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -649,7 +700,7 @@
                         android:text="@string/Write_review"
                         android:padding="8dp"
                         android:textColor="#000"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvRateUs"
@@ -660,7 +711,7 @@
                        android:padding="8dp"
                         android:text="@string/Rate_us"
                         android:textColor="#000"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:padding="8dp"
@@ -671,7 +722,7 @@
                         android:layout_marginStart="10dp"
                         android:text="@string/Logout"
                         android:textColor="#000"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -691,15 +742,15 @@
                         android:layout_marginTop="25dp"
                         android:adjustViewBounds="true" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <TextView
                         android:id="@+id/tvVersion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:gravity="center_horizontal"
-                        android:text="App Version 0.0.1"
-                        android:textColor="#000" />
+                        android:layout_gravity="center"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="20dp"
+                        android:text=""
+                        android:textColor="#333" />
 
                 </LinearLayout>
 

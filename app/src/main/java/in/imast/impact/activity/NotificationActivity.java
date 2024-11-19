@@ -1,15 +1,21 @@
 package in.imast.impact.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import in.imast.impact.Connection.APIResultLitener;
+import in.imast.impact.Connection.ApiClient;
 import in.imast.impact.R;
 import in.imast.impact.adapter.NotificationAdapter;
 import in.imast.impact.model.NotificationModel;
 import com.google.gson.Gson;
 import in.imast.impact.helper.StaticSharedpreference;
+import retrofit2.Response;
+
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import androidx.annotation.Nullable;
@@ -34,6 +40,8 @@ public class NotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notification);
         StaticSharedpreference.saveInt("notificationCount", 0, this);
         initViews();
+
+        getNotificationApi();
     }
 
     private void initViews() {
@@ -64,5 +72,29 @@ public class NotificationActivity extends AppCompatActivity {
         } else {
             tvNo.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void getNotificationApi()
+    {
+        ApiClient.getNotification(StaticSharedpreference.getInfo("AccessToken", this), new APIResultLitener<JsonObject>() {
+            @Override
+            public void onAPIResult(Response<JsonObject> response, String errorMessage) {
+
+                try {
+                    if (response != null && errorMessage == null) {
+
+                        if (response.code() == 200)
+                        {
+                            Log.v("test ", "test : "+ response.body());
+
+                        }
+
+                    }
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
  }

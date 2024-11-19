@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Impact</string>
 
-    <string name="appUpdate" translatable="false">Wigwam Finder needs an update !</string>
+    <string name="appUpdate" translatable="false">Impact needs an update !</string>
     <string name="appUpdateInfo" translatable="false">To update this, download the latest version</string>
 
     <string name="error_no_internet">No Internet Connection</string>
@@ -196,7 +196,7 @@ For detailed terms and condition please refer our website\n
     <string name="Scan">Scan</string>
     <string name="Rewards">Rewards</string>
     <string name="Menu">Menu</string>
-    <string name="Purchase">Purchase</string>
+    <string name="Purchase">Invoice</string>
 
 
 </resources>

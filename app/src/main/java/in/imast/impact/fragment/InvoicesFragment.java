@@ -180,15 +180,9 @@ public class InvoicesFragment extends Fragment implements MasterSelectedProductA
                 Intent intent = new Intent(getContext(), ImagesSelectorActivity.class);
 // max number of images to be selected
                 intent.putExtra(SelectorSettings.SELECTOR_MAX_IMAGE_NUMBER, 5);
-// min size of image which will be shown; to filter tiny images (mainly icons)
                 intent.putExtra(SelectorSettings.SELECTOR_MIN_IMAGE_SIZE, 100000);
-// show camera or not
                 intent.putExtra(SelectorSettings.SELECTOR_SHOW_CAMERA, true);
-
-
-// pass current selected images as the initial value
                 intent.putStringArrayListExtra(SelectorSettings.SELECTOR_INITIAL_SELECTED_LIST, mResults);
-// start the selector
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
@@ -261,7 +255,6 @@ public class InvoicesFragment extends Fragment implements MasterSelectedProductA
                     if (response.code() == 200) {
 
                         filesTemp.remove(0);
-
                         attachmentArr.add(response.body().get("name").getAsString());
                         if (filesTemp.size() == 0)
                             siteDetails();

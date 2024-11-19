@@ -4,7 +4,7 @@
     <base-config cleartextTrafficPermitted="false" />
 
     <domain-config>
-        <domain includeSubdomains="true">https://savitri.imast.in/</domain>
+        <domain includeSubdomains="true">https://impact.imast.in/</domain>
         <trust-anchors>
             <certificates src="@raw/imast"/>
         </trust-anchors>

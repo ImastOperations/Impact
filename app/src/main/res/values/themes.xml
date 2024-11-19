@@ -22,5 +22,9 @@
         <item name="android:fontFamily">@font/luto_regular</item>
         <item name="android:textSize">12dp</item>
     </style>
+    <style name="animation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
 
 </resources>

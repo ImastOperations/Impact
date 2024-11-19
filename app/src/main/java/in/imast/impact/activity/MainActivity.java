@@ -3,6 +3,7 @@ package in.imast.impact.activity;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -22,17 +23,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import in.imast.impact.BuildConfig;
+
 import in.imast.impact.Connection.APIResultLitener;
 import in.imast.impact.Connection.ApiClient;
 import in.imast.impact.R;
 import in.imast.impact.fragment.HomeFragment;
-import in.imast.impact.fragment.InvoiceFragmentWeb;
+import in.imast.impact.fragment.InvoicesFragmentNative;
 import in.imast.impact.fragment.RewardFragment;
 import in.imast.impact.fragment.SideMenuFragment;
 import in.imast.impact.fragment.WalletFragment;
 import in.imast.impact.helper.DialogClass;
 import in.imast.impact.helper.LanguageHelper;
+import in.imast.impact.helper.PackageAppName;
 import in.imast.impact.helper.StaticSharedpreference;
 import in.imast.impact.helper.Utilities;
 import retrofit2.Response;
@@ -48,6 +50,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.InstallState;
+import com.google.android.play.core.install.InstallStateUpdatedListener;
+import com.google.android.play.core.install.model.InstallStatus;
 import com.google.gson.JsonObject;
 
 public class MainActivity extends AppCompatActivity implements SideMenuFragment.OnClickWallet {
@@ -68,6 +76,13 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
     private String status;
     ImageView callButton;
 
+    private PackageAppName packageAppName;
+
+    private AppUpdateManager appUpdateManager;
+    private static final int REQ_CODE_VERSION_UPDATE = 530;
+    private InstallStateUpdatedListener installStateUpdatedListener;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,9 +90,13 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
         utilities = new Utilities(this);
         dialogClass = new DialogClass();
 
+        packageAppName = new PackageAppName(this);
+
+
+        appUpdateManager = AppUpdateManagerFactory.create(this);
+        checkForAppUpdate();
 
         initView();
-
 
         String ul = StaticSharedpreference.getInfo("app_language", this);
         Log.e("appLanguage>MyAPP", ul);
@@ -94,10 +113,8 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
         }
         else {
             /*chekversion*/
-            CheckVersion();
+            //CheckVersion();
         }
-
-
 
         Intent intent = getIntent();
         String languageActivity = intent.getStringExtra("fromLanguage");
@@ -126,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
         }
 
 
-        if (status.equals("invoice")) {
+        if (status.equalsIgnoreCase("invoice")) {
 
             tabPosition = 1;
             unselected();
@@ -135,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
             goToFragment(new WalletFragment());
         }
 
-        if (status.equals("lead")) {
+        if (status.equalsIgnoreCase("lead")) {
 
             tabPosition = 0;
             linearHome.setClickable(false);
@@ -155,9 +172,6 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
         }
 
 
-
-
-
         final String acToken = StaticSharedpreference.getInfo("AccessToken", MainActivity.this);
         Log.e("acToken> ", acToken);
 
@@ -168,78 +182,8 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
     }
 
 
-    /*chekversion*/
-    private void CheckVersion() {
-        if (!utilities.isOnline())
-            return;
-        //dialog = dialogClass.progresesDialog(this);
-        Map<String, String> queryParams = new HashMap<String, String>();
-        queryParams.put("app_type", "customer");
-        queryParams.put("customer_type_id", "2");
-
-        ApiClient.checkVersion(queryParams, new APIResultLitener<JsonObject>() {
-            private ImageView closed;
-
-            @Override
-            public void onAPIResult(Response<JsonObject> response, String errorMessage) {
-                if (response.body().get("status").getAsString().equals("success")) {
-                    Log.e("my_version_rsponse>>>", "" + response.body());
-
-                    String onlineVersion = response.body().get("version").getAsString();
-                    String force_update = response.body().get("force_update").getAsString();
-
-                    try {
-                        int currentVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
-                        Log.e("currentVersion>>>>", "" + currentVersion);
-
-                        if (currentVersion < Integer.parseInt(onlineVersion)) {
-
-                            if (force_update.equals("yes")) {
-                                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
-// ...
-                                LayoutInflater inflater = MainActivity.this.getLayoutInflater();
-                                View dialogView = inflater.inflate(R.layout.play_store_update, null);
-                                dialogBuilder.setView(dialogView);
-
-                                CardView cardLogin = (CardView) dialogView.findViewById(R.id.updateCardView);
-                                closed = (ImageView) dialogView.findViewById(R.id.closed);
-                                AlertDialog alertDialog = dialogBuilder.create();
-
-                                cardLogin.setOnClickListener(v -> {
-                                   // final String appPackageName = BuildConfig.APPLICATION_ID; // getPackageName() from Context or Activity object
-                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID)));
-                                    finishAffinity();
-                                    alertDialog.dismiss();
-                                });
-
-                                closed.setOnClickListener(v -> {
-                                    alertDialog.dismiss();
-                                });
-
-                                alertDialog.show();
-                            } else {
-                                closed.setVisibility(View.GONE);
-                            }
-                        } else {
-                        }
-
-                    } catch (PackageManager.NameNotFoundException e) {
-
-                    }
-                    //dialog.dismiss();
-                } else {
-                    //dialog.dismiss();
-                    Toast.makeText(MainActivity.this, "" + response.body().get("message").getAsString(), Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        }, this);
-
-    }
-
 
     private void initView() {
-
 
         relativeNotification = findViewById(R.id.relativeNotification);
         callButton = findViewById(R.id.call_icon);
@@ -267,14 +211,11 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
         String acToken = StaticSharedpreference.getInfo("customerType", this);
         Log.e("acToken>>", acToken);
 
-        /*if (!StaticSharedpreference.getInfo("customerType", this).equals("1")) {
+        if (!StaticSharedpreference.getInfo("customerType", this).equals("1")) {
             tvLead.setText("Scan");
         } else {
             tvLead.setText("Invoice");
-        }*/
-
-      /*  HomeFragment homeFragment = new HomeFragment();
-        goToFragment(homeFragment);*/
+        }
 
 
         linearHome.setOnClickListener(new View.OnClickListener() {
@@ -345,17 +286,6 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
             }
         });
 
-        /*linearLead.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE},
-
-                        1);
-
-            }
-        });*/
 
         linearLead.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -370,29 +300,9 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
 
                 //InvoicesFragment.productId.clear();
 
-                Log.e("InvoiceClicked>>", "Clicked..");
-                //relativeNotification.setVisibility(View.GONE);
-                //tvSave.setVisibility(View.VISIBLE);
                 imgLead.setBackgroundResource(R.drawable.invoice_active);
                 tvLead.setTextColor(Color.parseColor("#f27135"));
-                goToFragment(new InvoiceFragmentWeb());
-
-                /*if (!StaticSharedpreference.getInfo("customerType", MainActivity.this).equals("1")) {
-
-                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-                    Log.e("ScanClicked>>", "Clicked..");
-                } else {
-
-                    Log.e("InvoiceClicked>>", "Clicked..");
-                    relativeNotification.setVisibility(View.GONE);
-                    tvSave.setVisibility(View.VISIBLE);
-                    imgLead.setImageDrawable(getResources().getDrawable(R.drawable.ic_prime_scan));
-                    tvLead.setTextColor(Color.parseColor("#ffcb0d"));
-                    goToFragment(new InvoicesFragment());
-
-
-                }*/
+                goToFragment(new InvoicesFragmentNative());
 
             }
         });
@@ -431,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
                 imgMore.setBackgroundResource(R.drawable.ic_menu_active);
                 tvMore.setTextColor(Color.parseColor("#f27135"));
                 SideMenuFragment sideMenuFragment = new SideMenuFragment();
-                sideMenuFragment.setWalletListener(MainActivity.this);
+                //sideMenuFragment.setWalletListener(MainActivity.this);
                 goToFragment(sideMenuFragment);
             }
         });
@@ -475,12 +385,6 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
         fragmentTransaction.commit();
     }
 
-   /* public void goToFragmentTag(Fragment fragment, String tag) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        //  fragmentTransaction.setCustomAnimations(R.anim.slide_to_left, R.anim.slide_from_right);
-        fragmentTransaction.replace(R.id.container, fragment, tag);
-        fragmentTransaction.commit();
-    }*/
 
     @Override
     public void onResume() {
@@ -575,17 +479,96 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
                         perms.get(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         perms.get(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                 ) {
-                    startActivity(new Intent(MainActivity.this, ActivityNewEntry.class));                 // All Permissions Granted
+                    //startActivity(new Intent(MainActivity.this, ActivityNewEntry.class));                 // All Permissions Granted
 
                 } else {
 
                 }
-
             }
-
         }
     }
 
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void checkPermission()
+    {
+        int PERMISSION_ALL = 1;
+        String[] PERMISSIONS = {
+                android.Manifest.permission.CAMERA,
+                android.Manifest.permission.ACCESS_FINE_LOCATION,
+                android.Manifest.permission.POST_NOTIFICATIONS,
+                Manifest.permission.CALL_PHONE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+        };
+
+        if (!hasPermissions(this, PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+        }
+
+    }
+
+    private void checkForAppUpdate() {
+        appUpdateManager = AppUpdateManagerFactory.create(MainActivity.this);
+
+
+        // Create a listener to track request state updates.
+        installStateUpdatedListener = new InstallStateUpdatedListener() {
+            @Override
+            public void onStateUpdate(InstallState installState) {
+                // Show module progress, log state, or install the update.
+                if (installState.installStatus() == InstallStatus.DOWNLOADED)
+                    // After the update is downloaded, show a notification
+                    // and request user confirmation to restart the app.
+                    popupSnackbarForCompleteUpdateAndUnregister();
+            }
+        };
+
+    }
+
+    private void unregisterInstallStateUpdListener() {
+        if (appUpdateManager != null && installStateUpdatedListener != null)
+            appUpdateManager.unregisterListener(installStateUpdatedListener);
+    }
+
+    private void popupSnackbarForCompleteUpdateAndUnregister() {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "An update has just been downloaded.", Snackbar.LENGTH_INDEFINITE);
+        snackbar.setAction("Restart the App", new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                appUpdateManager.completeUpdate();
+            }
+        });
+        snackbar.setActionTextColor(getResources().getColor(R.color.white));
+        snackbar.show();
+
+        unregisterInstallStateUpdListener();
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkPermission();
+
+        // Retrieve the app language from SharedPreferences
+        String ul = StaticSharedpreference.getInfo("app_language", this);
+        Log.e("appLanguage>MyAPP", ul);
+
+        // Update language if available
+        if (ul != null) {
+            LanguageHelper.updateLanguage(MainActivity.this, ul);
+        }
+    }
 
     @Override
     protected void onDestroy() {

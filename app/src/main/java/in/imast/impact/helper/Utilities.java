@@ -295,13 +295,6 @@ public class Utilities {
         return TextUtils.isEmpty(editText.getText().toString().trim());
     }
 
-
-    /**
-     * @param fragment must be notnull
-     *                 Pick image from gallery or camera from @{@link Fragment}
-     */
-
-
     public File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -454,7 +447,7 @@ public class Utilities {
                             monthStr = "" + month;
                         }
 
-                        editText.setText(day+"-"+monthStr+"-"+yearPick);
+                        editText.setText(yearPick +"-"+monthStr+"-"+day);
 
                     }
 
@@ -464,76 +457,14 @@ public class Utilities {
         datePickerDialog.show();
 
     }
-    public static void datePickerBefore16Year(Context context, final EditText editText){
 
-
-        final Calendar c = Calendar.getInstance();
-        int   mYear = c.get(Calendar.YEAR);
-        final int  mMonth = c.get(Calendar.MONTH);
-        int  mDay = c.get(Calendar.DAY_OF_MONTH);
-
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(context,
-                new DatePickerDialog.OnDateSetListener() {
-
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int yearPick, int monthPick, int dayPick) {
-
-                        int month =monthPick+1;
-
-                        String day,monthStr;
-
-                        if(dayPick<10){
-                            day ="0"+dayPick;
-                        }else{
-                            day =""+dayPick;
-                        }
-
-                        if (month < 10) {
-                            monthStr = "0" + month;
-                        } else {
-                            monthStr = "" + month;
-                        }
-
-                        editText.setText(day+"-"+monthStr+"-"+yearPick);
-
-                    }
-
-                }, mYear, mMonth, mDay);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, -16);
-
-        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
-        datePickerDialog.show();
-
-    }
-
-
-    public static Bitmap retriveVideoFrameFromVideo(String videoPath)
-            throws Throwable {
-        Bitmap bitmap = null;
-        MediaMetadataRetriever mediaMetadataRetriever = null;
-        try {
-            mediaMetadataRetriever = new MediaMetadataRetriever();
-            if (Build.VERSION.SDK_INT >= 14)
-                mediaMetadataRetriever.setDataSource(videoPath, new HashMap<String, String>());
-            else
-                mediaMetadataRetriever.setDataSource(videoPath);
-
-            bitmap = mediaMetadataRetriever.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new Throwable(
-                    "Exception in retriveVideoFrameFromVideo(String videoPath)"
-                            + e.getMessage());
-
-        } finally {
-            if (mediaMetadataRetriever != null) {
-                mediaMetadataRetriever.release();
-            }
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
         }
-        return bitmap;
+        return false;
     }
 
 }

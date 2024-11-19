@@ -11,6 +11,7 @@ import java.util.Map;
 
 import in.imast.impact.model.MasterProductReqModel;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
@@ -72,8 +73,29 @@ public interface BaseApiService {
     @POST("v1/site-details/media")
     Call<JsonObject> siteMedia(@Header("Authorization") String authorization, @Part MultipartBody.Part multipartTypedOutput);
 
+    @Multipart
+    @POST("v2/native/invoice-create")
+    Call<JsonObject> add_invoice(@Header("Authorization") String authorization,
+                                  @Part("distributor_id") RequestBody distributor_id,
+                                  @Part("asm_id") RequestBody asm_id,
+                                  @Part("invoice_number") RequestBody invoice_number,
+                                  @Part("invoice_date") RequestBody invoice_date,
+                                  @Part MultipartBody.Part attachment);
+
+
+    @GET("v2/native/asm-list")
+    Call<JsonObject> get_area_sales(@Header("Authorization") String authorization, @QueryMap Map<String, String> queryParams);
+
+
+    @GET("v2/native/distributors-list")
+    Call<JsonObject> get_distributer(@Header("Authorization") String authorization, @QueryMap Map<String, String> queryParams);
+
     @Headers("Content-Type: application/json")
     @POST("v1/save-invoice")
     Call<JsonObject> saveInvoice(@Header("Authorization") String authorization, @Body MasterProductReqModel customerRedeemRequestModel);
+
+    @GET("v2/native/get-notification")
+    Call<JsonObject> getNotification(@Header("Authorization") String authorization);
+
 
 }

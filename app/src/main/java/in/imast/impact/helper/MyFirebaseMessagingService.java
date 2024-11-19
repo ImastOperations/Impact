@@ -137,15 +137,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         Uri uri = Uri.parse("android.resource://"
                 + getApplicationContext().getPackageName() + "/" + R.raw.mix_positive);
 
 
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "beurer")
-                .setSmallIcon(R.drawable.wigwam_loyalty_app_icon)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.app_name))
+                .setSmallIcon(R.drawable.logo)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(pendingIntent)
@@ -183,13 +183,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         Uri uri = Uri.parse("android.resource://"
                 + getApplicationContext().getPackageName() + "/" + R.raw.mix_positive);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "beurer")
-                .setSmallIcon(R.drawable.wigwam_loyalty_app_icon)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.app_name))
+                .setSmallIcon(R.drawable.logo)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentIntent(pendingIntent)
@@ -208,7 +208,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String name = "name";
             String descriptionText = "channel";
             int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel("Ramaply", name, importance);
+            NotificationChannel channel = new NotificationChannel(getString(R.string.app_name), name, importance);
             channel.enableVibration(true);
             channel.enableLights(true);
             channel.setSound(uri, audioAttributes);

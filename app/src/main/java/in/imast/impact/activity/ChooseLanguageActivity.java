@@ -118,7 +118,6 @@ public class ChooseLanguageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
                 if (selectedLanguage.equals("english")) {
                     selectedLanguage = "m-en";
                     LanguageHelper.storeUserLanguage(ChooseLanguageActivity.this, "en");
@@ -142,12 +141,14 @@ public class ChooseLanguageActivity extends AppCompatActivity {
                     LanguageHelper.updateLanguage(ChooseLanguageActivity.this, "kn");
                     //LocaleHelper.setLocale(ChooseLanguageActivity.this, "m-kn");
                 }
+
                 else if (selectedLanguage.equals("malayalam")) {
                     selectedLanguage = "m-ml";
                     LanguageHelper.storeUserLanguage(ChooseLanguageActivity.this, "ml");
                     LanguageHelper.updateLanguage(ChooseLanguageActivity.this, "ml");
                     //LocaleHelper.setLocale(ChooseLanguageActivity.this, "m-kn");
                 }
+
                 else if (selectedLanguage.equals("bangla")) {
                     selectedLanguage = "m-bn";
                     LanguageHelper.storeUserLanguage(ChooseLanguageActivity.this, "bn");
