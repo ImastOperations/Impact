@@ -267,11 +267,10 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + "09875900609"));
+                intent.setData(Uri.parse("tel:" + "8069081275"));
 
                 if (Build.VERSION.SDK_INT > 23) {
                     startActivity(intent);
-                    Log.e("BuildV>","true---");
                 } else {
 
                     if (ActivityCompat.checkSelfPermission(MainActivity.this,
