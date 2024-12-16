@@ -805,7 +805,7 @@ public class InvoicesFragmentNative extends Fragment implements MasterSelectedPr
                     try {
                         long fileSize = getFileSize(uri);
                         if (fileSize > MAX_FILE_SIZE) {
-                            Toast.makeText(getContext(), "File size exceeds  MB", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "File size exceeds 2 MB", Toast.LENGTH_LONG).show();
                         } else {
                             if (file1.exists() || !file1.getName().equalsIgnoreCase("")) {
                                 remove_tv.setVisibility(View.VISIBLE);

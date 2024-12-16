@@ -1,0 +1,5 @@
+alias : Impact
+password : Imast@123
+
+jks path : Impact/app/impactLoyality.jks
+jks name : impactLoyality.jks
