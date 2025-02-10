@@ -105,7 +105,7 @@ public class WelcomeScreen extends AppCompatActivity implements OnKeyboardVisibi
         registerMaterialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(WelcomeScreen.this, WebPageActivity.class);
+                Intent intent = new Intent(WelcomeScreen.this, RegistrationActivity.class);
                 intent.putExtra("from", "register");
                 intent.putExtra("url", ApiClient.WEB_BASE_URL + "customer-create");
                 intent.putExtra("title", "Registration");

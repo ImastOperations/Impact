@@ -46,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="Product     "
+                    android:text="@string/product"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -59,7 +59,7 @@
                     android:layout_centerInParent="true"
                     android:layout_marginRight="10dp"
                     android:gravity="center"
-                    android:text="SAVE"
+                    android:text="@string/save"
                     android:textColor="@color/yellow"
                     android:textSize="14sp"
                     android:textStyle="bold" />
@@ -94,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Item"
+                    android:text="@string/item"
                     android:textSize="14sp" />
 
                 <TextView
@@ -130,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Product Code"
+                    android:text="@string/product_code"
                     android:textSize="14sp" />
 
                 <TextView
@@ -166,7 +166,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Rate"
+                    android:text="@string/rate"
                     android:textSize="14sp" />
 
                 <TextView
@@ -200,7 +200,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Quantity"
+                    android:text="@string/quantity"
                     android:textSize="14sp" />
 
                 <EditText
@@ -211,7 +211,7 @@
                     android:background="@null"
                     android:inputType="number"
                     android:gravity="right|center_vertical"
-                    android:hint="Tap to Enter"
+                    android:hint="@string/tap_to_enter"
                     android:singleLine="true"
                     android:id="@+id/tvQuantity"
                     android:textColor="#000000"
@@ -234,7 +234,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Unit"
+                    android:text="@string/unit"
                     android:textSize="14sp" />
 
                 <TextView

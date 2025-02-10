@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativeCircle"
                 android:layout_marginTop="25dp"
-                android:text="No Internet"
+                android:text="@string/no_internet"
                 android:textColor="#000"
                 android:textSize="24sp"
                 android:id="@+id/tvNoInternet"
@@ -124,7 +124,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvNoInternet"
-                android:text="Connection is poor"
+                android:text="@string/connection_is_poor"
                 android:textColor="#000"
                 android:textSize="16sp"
                 android:layout_marginTop="10dp"
@@ -151,6 +151,8 @@
         android:layout_centerInParent="true"
         android:progress="45"
         android:visibility="visible" />
+
+    <include layout="@layout/services_errors"/>
 
 
 </RelativeLayout>

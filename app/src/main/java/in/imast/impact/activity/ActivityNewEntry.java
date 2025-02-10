@@ -23,7 +23,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.JsonObject;
-import com.google.zxing.Result;
+import com.google.zxing.ResultPoint;
+import com.journeyapps.barcodescanner.BarcodeCallback;
+import com.journeyapps.barcodescanner.BarcodeResult;
+import com.journeyapps.barcodescanner.BarcodeView;
 
 import in.imast.impact.Connection.APIResultLitener;
 import in.imast.impact.Connection.ApiClient;
@@ -40,13 +43,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
 import retrofit2.Response;
 
-public class ActivityNewEntry extends Activity implements ZXingScannerView.ResultHandler {
+public class ActivityNewEntry extends Activity {
 
     RecyclerView recyclerView;
     EditText Edtname;
@@ -60,7 +62,7 @@ public class ActivityNewEntry extends Activity implements ZXingScannerView.Resul
     Utilities utilities;
     private TextView resultTextView, tvAdd;
     String barcodeValue = "";
-    private ZXingScannerView mScannerView;
+    private BarcodeView mBarcodeView;
     public static ArrayList<String> codeArray = new ArrayList<>();
     public static ArrayList<String> arrResponse = new ArrayList<>();
     public static ArrayList<String> arrEntryId = new ArrayList<>();
@@ -97,10 +99,11 @@ public class ActivityNewEntry extends Activity implements ZXingScannerView.Resul
         submit = findViewById(R.id.btn_submit);
         final RecyclerView recyclerView = findViewById(R.id.recyclerview);
         imgBack = findViewById(R.id.imgBack);
-        mScannerView = findViewById(R.id.scanner);
+        mBarcodeView = findViewById(R.id.scanner);
         tvAdd = findViewById(R.id.tvAdd);
         cardSubmit = findViewById(R.id.cardSubmit);
 
+        mBarcodeView.decodeContinuous(callback);
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +135,7 @@ public class ActivityNewEntry extends Activity implements ZXingScannerView.Resul
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 // submit.setVisibility(View.VISIBLE);
                 isScan = false;
-                mScannerView.setVisibility(View.GONE);
+                mBarcodeView.setVisibility(View.GONE);
                 relativeOrcan.setVisibility(View.GONE);
                 recyclerViewCoupon.setVisibility(View.VISIBLE);
 
@@ -194,79 +197,14 @@ public class ActivityNewEntry extends Activity implements ZXingScannerView.Resul
 
     boolean isScan = true;
 
-    @Override
-    public void handleResult(Result rawResult) {
-        // Do something with the result here
-        Log.v("akram", "call method result");
-        if (isScan) {
-            isScan = false;
-
-            barcodeValue = rawResult.getText();
-            Log.v("akram", rawResult.getText()); // Prints scan results
-            Log.v("akram", rawResult.getBarcodeFormat().toString());
-            // If you would like to resume scanning, call this method below:
-            mScannerView.resumeCameraPreview(this);
-
-            String barcodeValue = "";
-            try {
-                barcodeValue = decrypt(rawResult.getText());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            if (barcodeValue.length() < 8) {
-                Toast.makeText(ActivityNewEntry.this, "Invalid Coupon code", Toast.LENGTH_SHORT).show();
-            } else {
-                dialog = dialogClass.progresesDialog(ActivityNewEntry.this);
-                schemeredeemed(barcodeValue);
-            } //
-
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    isScan = true;
-                    mScannerView.setResultHandler(ActivityNewEntry.this); // Register ourselves as a handler for scan results.
-                    mScannerView.startCamera();
-                }
-            }, 1500);
-
-        }
-    }
-
-    private String decrypt(String encrypted)
-            throws Exception {
-        try {
-
-            String split[] = encrypted.split("\\?");
-
-            String base64 = "";
-            if (split.length > 1)
-                base64 = split[1].substring(2);
-            ;
-            Log.v("akram", "encret " + base64);
-
-            byte[] data2 = Base64.decode(base64, Base64.DEFAULT);
-            String text2 = new String(data2, "UTF-8");
-
-            Log.v("akram", "decripted " + text2);
-
-            return text2;
-        } catch (UnsupportedEncodingException e) {
-
-            e.printStackTrace();
-        }
-        return "";
-    }
 
     @Override
     public void onBackPressed() {
-        if (mScannerView.getVisibility() == View.GONE) {
-            mScannerView.setVisibility(View.VISIBLE);
+        if (mBarcodeView.getVisibility() == View.GONE) {
+            mBarcodeView.setVisibility(View.VISIBLE);
             relativeOrcan.setVisibility(View.VISIBLE);
             isScan = true;
             Edtname.setText("");
-            mScannerView.setResultHandler(ActivityNewEntry.this); // Register ourselves as a handler for scan results.
-            mScannerView.startCamera();
             recyclerViewCoupon.setVisibility(View.GONE);
 
             // submit.setVisibility(View.GONE);
@@ -386,9 +324,8 @@ public class ActivityNewEntry extends Activity implements ZXingScannerView.Resul
 
     @Override
     protected void onResume() {
-
-        mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
-        mScannerView.startCamera();
+        mBarcodeView.resume();
+        mBarcodeView.setVisibility(View.VISIBLE);
 
         super.onResume();
     }
@@ -402,8 +339,48 @@ public class ActivityNewEntry extends Activity implements ZXingScannerView.Resul
     @Override
     protected void onPause() {
         super.onPause();
-        mScannerView.stopCamera();
+        mBarcodeView.pause();
+        mBarcodeView.setActivated(false);
     }
+
+    private final BarcodeCallback callback = new BarcodeCallback() {
+        @Override
+        public void barcodeResult(BarcodeResult result)
+        {
+            if (isScan) {
+                isScan = false;
+
+                barcodeValue = result.getText();
+                // If you would like to resume scanning, call this method below:
+                //mScannerView.resumeCameraPreview(this);
+
+                if (barcodeValue.length() < 8) {
+                    Toast.makeText(ActivityNewEntry.this, "Invalid Coupon code", Toast.LENGTH_SHORT).show();
+                } else {
+                    dialog = dialogClass.progresesDialog(ActivityNewEntry.this);
+                    schemeredeemed(barcodeValue);
+                }
+                mBarcodeView.pause();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        isScan = true;
+                        mBarcodeView.resume();
+                        mBarcodeView.setVisibility(View.VISIBLE);
+                    }
+                }, 1500);
+
+
+            }
+
+        }
+
+        @Override
+        public void possibleResultPoints(List<ResultPoint> resultPoints) {
+            BarcodeCallback.super.possibleResultPoints(resultPoints);
+        }
+    };
 
 
 }

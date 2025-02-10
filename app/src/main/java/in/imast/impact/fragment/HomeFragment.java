@@ -1,33 +1,41 @@
 package in.imast.impact.fragment;
 
+import static in.imast.impact.activity.MainActivity.progress;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
+
+import java.util.HashMap;
 
 import in.imast.impact.Connection.ApiClient;
 import in.imast.impact.R;
 import in.imast.impact.activity.MainActivity;
 import in.imast.impact.helper.DialogClass;
 import in.imast.impact.helper.StaticSharedpreference;
-
-import com.google.firebase.analytics.FirebaseAnalytics;
-
-import java.util.HashMap;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
-import static in.imast.impact.activity.MainActivity.progress;
+import in.imast.impact.helper.Utilities;
 
 public class HomeFragment extends Fragment {
 
@@ -38,7 +46,12 @@ public class HomeFragment extends Fragment {
     Dialog dialog;
     View view;
     WebView webView;
-    public static final int SPLASH_DELAY = 2; // in second
+    private Utilities utilities;
+    public static final int SPLASH_DELAY = 2;// in second
+    private Button btnTryAgain;
+    private RelativeLayout relativeServerError,relativeError;
+
+    private int statusCode = 0;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -65,18 +78,64 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         context = getActivity();
         dialogClass = new DialogClass();
+        utilities = new Utilities(getActivity());
+
+        init();
+
+    }
+
+    private void init()
+    {
         webView = view.findViewById(R.id.webView);
+        btnTryAgain = view.findViewById(R.id.btnTryAgain);
+        relativeError = view.findViewById(R.id.relativeError);
+        relativeServerError = view.findViewById(R.id.relativeServerError);
+        webView = view.findViewById(R.id.webView);
+
+        if(utilities.isOnline())
+        {
+            setWebView();
+        }else {
+            relativeError.setVisibility(View.VISIBLE);
+            webView.setVisibility(View.GONE);
+        }
+
+        btnTryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (utilities.isOnline()) {
+                    progress.setVisibility(View.GONE);
+                    if(statusCode >= 200 && statusCode < 300)
+                    {
+                        getActivity().recreate();
+                        relativeError.setVisibility(View.GONE);
+                        webView.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        getActivity().recreate();
+                        relativeServerError.setVisibility(View.GONE);
+                        webView.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+    }
+
+
+    private void setWebView()
+    {
         webView.clearCache(true);
         webView.getSettings().setLoadsImagesAutomatically(true);
+        webView.getSettings().getDomStorageEnabled();
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         final String acToken = StaticSharedpreference.getInfo("AccessToken", getActivity());
         headers = new HashMap<>();
-        String lan = StaticSharedpreference.getInfo("language",getContext());
-        Log.e("language>",lan);
+        String lan = StaticSharedpreference.getInfo("language", getContext());
+        Log.e("language>", lan);
         // String basicAuthHeader = android.util.Base64.encodeToString((username + ":" + password).getBytes(), android.util.Base64.NO_WRAP);
         headers.put("Authorization", acToken);
-        headers.put("Accept-Language", StaticSharedpreference.getInfo("language",getContext()));
+        headers.put("Accept-Language", StaticSharedpreference.getInfo("language", getContext()));
         // view.loadUrl(url, headers);
         webView.loadUrl(ApiClient.WEB_BASE_URL + "customer-dashboard", headers);
         webView.setWebViewClient(new CustomWebViewClient());
@@ -86,6 +145,15 @@ public class HomeFragment extends Fragment {
                 super.onProgressChanged(view, newProgress);
                 if (newProgress == 100) {
                     progress.setVisibility(View.GONE);
+
+                    if(statusCode >= 400  && statusCode <= 500)
+                    {
+                        webView.setVisibility(View.GONE);
+                    }
+                    else {
+                        webView.setVisibility(View.VISIBLE);
+                    }
+
                 } else {
                     progress.setProgress(newProgress);
                     progress.setVisibility(View.VISIBLE);
@@ -127,6 +195,29 @@ public class HomeFragment extends Fragment {
             Log.v("akram", "url3" + url);
 
             super.onPageFinished(view, url);
+        }
+
+        @Override
+        public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+            super.onReceivedHttpError(view, request, errorResponse);
+
+            if(request.getUrl().toString().contains(ApiClient.WEB_BASE_URL))
+            {
+                statusCode = errorResponse.getStatusCode();
+                Log.v("test ", " sdf + :" + statusCode);
+
+                webView.setVisibility(View.GONE);
+                if(statusCode == 401)
+                {
+                    dialogClass.alertDialogAuthentication(getActivity());
+                }
+                else {
+                    relativeServerError.setVisibility(View.VISIBLE);
+                }
+            }
+            else {
+                webView.setVisibility(View.GONE);
+            }
         }
     }
 

@@ -18,7 +18,9 @@ public class LoginResponse {
     private String verifey;
 
 
-
+    @SerializedName("gstin_number")
+    @Expose
+    private String gstin_number;
 
     @SerializedName("user_details")
     @Expose
@@ -40,6 +42,11 @@ public class LoginResponse {
     public UserInfo getUserinfo() {
         return userinfo;
     }
+
+    public String getGstin_number() {
+        return gstin_number;
+    }
+
 
     public class UserInfo {
 
@@ -294,7 +301,6 @@ public class LoginResponse {
         public String getAccessToken() {
             return accessToken;
         }
-
 
 
     }

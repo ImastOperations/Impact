@@ -431,6 +431,7 @@
                     android:layout_toEndOf="@id/invoice_number_tv"
                     android:background="@null"
                     android:text=""
+                    android:inputType="textCapCharacters"
                     android:gravity="right|center_vertical"
                     android:hint="Enter Full Invoice Number"
                     android:textColor="#000000"

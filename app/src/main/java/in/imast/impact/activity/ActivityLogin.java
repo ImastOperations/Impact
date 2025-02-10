@@ -316,6 +316,8 @@ public class ActivityLogin extends AppCompatActivity implements OnKeyboardVisibi
                         StaticSharedpreference.saveInfo("email", UserInfo.getEmail() + "", ActivityLogin.this);
                         StaticSharedpreference.saveInfo("AccessToken", "Bearer " + response.body().getAccess_token() + "", ActivityLogin.this);
                         StaticSharedpreference.saveInfo("mobile", UserInfo.getMobile() + "", ActivityLogin.this);
+                        StaticSharedpreference.saveInfo("gstin_number", response.body().getGstin_number() , ActivityLogin.this);
+
 
                          StaticSharedpreference.saveInfo("user_verify",  response.body().getVerifey()+ "", ActivityLogin.this);
 
@@ -324,9 +326,17 @@ public class ActivityLogin extends AppCompatActivity implements OnKeyboardVisibi
 
                         if(StaticSharedpreference.getInfo("user_verify", ActivityLogin.this).equalsIgnoreCase("true"))
                         {
-                            startActivity(new Intent(ActivityLogin.this, MainActivity.class)
-                                    .putExtra("status",""));
-                            finishAffinity();
+                            if(!StaticSharedpreference.getInfo("kyc_complete", ActivityLogin.this).equalsIgnoreCase("Done"))
+                            {
+                                startActivity(new Intent(ActivityLogin.this, KycVerifyActivity.class));
+                                finishAffinity();
+                            }
+                            else {
+                                startActivity(new Intent(ActivityLogin.this, MainActivity.class)
+                                        .putExtra("status",""));
+                                finishAffinity();
+                            }
+
                         }
                         else{
                             DialogClass.alertDialog("Verify", "Your account is under review and will be activated soon. Please try again later.", ActivityLogin.this, true);

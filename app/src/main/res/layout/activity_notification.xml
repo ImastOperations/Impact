@@ -48,7 +48,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:layout_toRightOf="@+id/linearBack"
-                    android:text="Notification"
+                    android:text="@string/notification"
                     android:textColor="@color/black"
                     android:textSize="14sp" />
 

@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import in.imast.impact.R;
@@ -30,213 +31,134 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+    private static final String CHANNEL_ID = "Impact Loyalty";
+    private static final String CHANNEL_NAME = "Impact Loyalty";
+    private static final String CHANNEL_DESCRIPTION = "Channel for Impact Loyalty notifications";
 
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
-
-        Log.e("remoteMessage>>>>", "" + remoteMessage.getData());
+    public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        String mes = remoteMessage.getData().get("message");
-        String title = remoteMessage.getData().get("title");
-        String time = remoteMessage.getData().get("time");
-        String image = remoteMessage.getData().get("image");
-
-
-        Gson gson = new Gson();
-        String json2 = StaticSharedpreference.getInfo("notification", getApplicationContext());
-
-        Type type = new TypeToken<ArrayList<NotificationModel>>() {
-        }.getType();
-        ArrayList<NotificationModel> userInfo2 = gson.fromJson(json2, type);
-
-
-        if (userInfo2 != null) {
-            if (!userInfo2.equals("")) {
-                boolean available = false;
-                for (int i = 0; i < userInfo2.size(); i++) {
-                    if (userInfo2.get(i).getMessage() == mes) {
-
-                        available = true;
-                    }
-                }
-
-
-                if (userInfo2.size() == 10) {
-                    userInfo2.remove(9);
-                }
-
-                NotificationModel notification = new NotificationModel();
-
-                notification.setTitle(title.toString());
-                notification.setMessage(mes.toString());
-                notification.setTime(time.toString());
-                notification.setBitmap(image.toString());
-
-                userInfo2.add(0, notification);
-
-                Gson gson1 = new Gson();
-                String specialization = gson1.toJson(userInfo2);
-
-                StaticSharedpreference.saveInfo("notification", specialization, getApplicationContext());
-
-            }
-        } else if (mes != "") {
-
-            ArrayList<NotificationModel> notiArr = new ArrayList<NotificationModel>();
-
-            NotificationModel notification = new NotificationModel();
-
-            notification.setTitle(title.toString());
-            notification.setMessage(mes.toString());
-            notification.setTime(time.toString());
-            notification.setBitmap(image.toString());
-
-            notiArr.add(notification);
-
-            Gson gson1 = new Gson();
-            String specialization = gson1.toJson(notiArr);
-
-            StaticSharedpreference.saveInfo("notification", specialization, getApplicationContext());
+        if (!remoteMessage.getData().isEmpty()) {
+            handleDataPayload(remoteMessage.getData());
         }
 
-        int count = StaticSharedpreference.getInt("notificationCount", getApplicationContext());
-
-        if (count != 10)
-            StaticSharedpreference.saveInt("notificationCount", count + 1, getApplicationContext());
-
-
-        if (image.equals(""))
-            notification(title, mes);
-        else {
-
-            Bitmap bitmap = convertBitmap(image);
-            notificationImage(title, mes, bitmap);
+        if (remoteMessage.getNotification() != null) {
+            handleNotification(
+                    remoteMessage.getNotification().getTitle(),
+                    remoteMessage.getNotification().getBody(),
+                    remoteMessage.getNotification().getImageUrl() != null ? remoteMessage.getNotification().getImageUrl().toString() : null
+            );
         }
     }
 
-    private Bitmap convertBitmap(String urlImage) {
-        HttpURLConnection connection = null;
+    private void handleDataPayload(Map<String, String> data) {
+        String title = data.get("title");
+        String body = data.get("body");
+        String imageUrl = data.get("image_url");
+
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            createNotificationWithImage(title, body, imageUrl);
+        } else {
+            createNotificationWithoutImage(title, body);
+        }
+    }
+
+    private void handleNotification(String title, String body, String imageUrl) {
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            createNotificationWithImage(title, body, imageUrl);
+        } else {
+            createNotificationWithoutImage(title, body);
+        }
+    }
+
+    private void createNotificationWithoutImage(String title, String message) {
+        createNotificationChannel();
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setSmallIcon(R.drawable.logo)
+                .setAutoCancel(true)
+                .setContentIntent(createPendingIntent())
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message));
+
+        Log.v("NotificationIntent", "Testing intent: " + title);
+        Log.v("NotificationIntent", "Testing intent: " + message);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.notify(106, builder.build());
+        }
+    }
+
+    private void createNotificationWithImage(String title, String message, String imageUrl) {
+        createNotificationChannel();
+
+        Bitmap bitmap = null;
         try {
-            URL url = new URL(urlImage);
-            connection = (HttpURLConnection) url.openConnection();
+            URL url = new URL(imageUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();
-            InputStream input = connection.getInputStream();
-            return BitmapFactory.decodeStream(input);
+            InputStream inputStream = connection.getInputStream();
+            bitmap = BitmapFactory.decodeStream(inputStream);
         } catch (IOException e) {
-            // Log exception
-            return null;
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
+            Log.e("NotificationLogs", "Error downloading image for notification: " + e.getMessage());
+        }
+
+        if (bitmap != null) {
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setSmallIcon(R.drawable.logo)
+                    .setAutoCancel(true)
+                    .setContentIntent(createPendingIntent())
+                    .setStyle(new NotificationCompat.BigPictureStyle().bigPicture(bitmap));
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager != null) {
+                notificationManager.notify(106, builder.build());
+            }
+        } else {
+            createNotificationWithoutImage(title, message);
+        }
+    }
+
+    private PendingIntent createPendingIntent() {
+        Intent intent = new Intent(this, NotificationActivity.class);
+        intent.putExtra("isFromNotification", true);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            return PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            return PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    CHANNEL_ID,
+                    CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            channel.setDescription(CHANNEL_DESCRIPTION);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
             }
         }
-    }
-
-    public void notificationImage(String title, String message, Bitmap bitmap) {
-        Intent intent = new Intent(this, NotificationActivity.class);
-
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-        Uri uri = Uri.parse("android.resource://"
-                + getApplicationContext().getPackageName() + "/" + R.raw.mix_positive);
-
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, getString(R.string.app_name))
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setContentIntent(pendingIntent)
-                .setStyle(new NotificationCompat.BigPictureStyle()
-                        .bigPicture(bitmap))
-                .setAutoCancel(true);
-
-        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE)
-                    .build();
-
-            String name = "name";
-            String descriptionText = "channel";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel("alliednippon", name, importance);
-            channel.enableVibration(true);
-            channel.enableLights(true);
-            channel.setSound(uri, audioAttributes);
-            // Register the channel with the system
-
-            notificationManager.createNotificationChannel(channel);
-        }
-        notificationManager.notify(106, builder.build());
-
-    }
-
-
-    public void notification(String title, String message) {
-
-
-        Intent intent = new Intent(this, NotificationActivity.class);
-
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-        PendingIntent pendingIntent = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-            pendingIntent = PendingIntent.getActivity
-                    (this, 0, intent, PendingIntent.FLAG_MUTABLE);
-        } else {
-            pendingIntent = PendingIntent.getActivity
-                    (this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-        }
-
-
-        Uri uri = Uri.parse("android.resource://" + getApplicationContext().getPackageName() + "/" + R.raw.mix_positive);
-
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "alliednippon")
-                .setSmallIcon(R.drawable.logo)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setContentIntent(pendingIntent)
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(message))
-                .setAutoCancel(true);
-
-        NotificationManager notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                    .build();
-
-            String name = "name";
-            String descriptionText = "channel";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel("alliednippon", name, importance);
-            channel.enableVibration(true);
-            channel.enableLights(true);
-            channel.setSound(uri, audioAttributes);
-            // Register the channel with the system
-
-            notificationManager.createNotificationChannel(channel);
-        }
-        notificationManager.notify(106, builder.build());
-
     }
 
     @Override
-    public void onNewToken(String s) {
+    public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
         StaticSharedpreference.saveInfoForgot("fcmToken", s, getApplicationContext());
+        Log.v("fcmToken", s);
     }
 }

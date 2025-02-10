@@ -25,9 +25,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.JsonObject;
-import com.zfdang.multiple_images_selector.ImagesSelectorActivity;
-import com.zfdang.multiple_images_selector.SelectorSettings;
-
 
 import org.json.JSONObject;
 
@@ -177,13 +174,13 @@ public class InvoicesFragment extends Fragment implements MasterSelectedProductA
                         1);*/
 
                 // start multiple photos selector
-                Intent intent = new Intent(getContext(), ImagesSelectorActivity.class);
+               /* Intent intent = new Intent(getContext(), ImagesSelectorActivity.class);
 // max number of images to be selected
                 intent.putExtra(SelectorSettings.SELECTOR_MAX_IMAGE_NUMBER, 5);
                 intent.putExtra(SelectorSettings.SELECTOR_MIN_IMAGE_SIZE, 100000);
                 intent.putExtra(SelectorSettings.SELECTOR_SHOW_CAMERA, true);
                 intent.putStringArrayListExtra(SelectorSettings.SELECTOR_INITIAL_SELECTED_LIST, mResults);
-                startActivityForResult(intent, REQUEST_CODE);
+                startActivityForResult(intent, REQUEST_CODE);*/
             }
         });
 
@@ -451,7 +448,7 @@ public class InvoicesFragment extends Fragment implements MasterSelectedProductA
                 img4.setVisibility(View.GONE);
                 img5.setVisibility(View.GONE);
                 cardPhotos.setVisibility(View.GONE);
-                mResults = data.getStringArrayListExtra(SelectorSettings.SELECTOR_RESULTS);
+               // mResults = data.getStringArrayListExtra(SelectorSettings.SELECTOR_RESULTS);
                 assert mResults != null;
 
                 StringBuffer sb = new StringBuffer();
@@ -556,7 +553,7 @@ public class InvoicesFragment extends Fragment implements MasterSelectedProductA
                         perms.get(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                 ) {
                     // start multiple photos selector
-                    Intent intent = new Intent(getContext(), ImagesSelectorActivity.class);
+                  /*  Intent intent = new Intent(getContext(), ImagesSelectorActivity.class);
 // max number of images to be selected
                     intent.putExtra(SelectorSettings.SELECTOR_MAX_IMAGE_NUMBER, 5);
 // min size of image which will be shown; to filter tiny images (mainly icons)
@@ -566,7 +563,7 @@ public class InvoicesFragment extends Fragment implements MasterSelectedProductA
 // pass current selected images as the initial value
                     intent.putStringArrayListExtra(SelectorSettings.SELECTOR_INITIAL_SELECTED_LIST, mResults);
 // start the selector
-                    startActivityForResult(intent, REQUEST_CODE);
+                    startActivityForResult(intent, REQUEST_CODE);*/
 
                 } else {
 

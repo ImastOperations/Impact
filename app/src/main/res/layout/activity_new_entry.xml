@@ -67,7 +67,7 @@
                     android:layout_marginRight="10dp"
                     android:gravity="center_vertical"
                     android:paddingLeft="10dp"
-                    android:text="Submit"
+                    android:text="@string/submit"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -108,7 +108,7 @@
                         android:id="@+id/tvScan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Entry"
+                        android:text="@string/entry"
                         android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -158,7 +158,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@drawable/edittext_shape_red22"
-                                android:hint="Enter Coupon Code"
+                                android:hint="@string/enter_coupon_code"
                                 android:maxLength="16"
                                 android:paddingLeft="10dp"
                                 android:textColor="@color/black"
@@ -227,7 +227,6 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-
                 android:orientation="horizontal"
                 android:visibility="gone">
 
@@ -266,7 +265,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:text="Or scan"
+                android:text="@string/or_scan"
                 android:textColor="#a8a8a8"
                 android:textSize="16sp" />
 
@@ -292,7 +291,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/vertical_gradient"
-                android:text="ADD"
+                android:text="@string/add"
                 android:textColor="#fff"
                 android:visibility="gone" />
 
@@ -301,13 +300,8 @@
                 android:layout_height="match_parent"
                 android:layout_above="@+id/cardSubmit">
 
-                <me.dm7.barcodescanner.zxing.ZXingScannerView
-                    android:id="@+id/scanner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp">
 
-                </me.dm7.barcodescanner.zxing.ZXingScannerView>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewCoupon"

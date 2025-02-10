@@ -27,130 +27,66 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.RecylerviewViewholder> {
-    Context context;
-    private ArrayList<NotificationModel> arrayList;
-    public NotificationAdapter(Context mcontext, ArrayList<NotificationModel> arrayList){
 
-        context = mcontext;
-        this.arrayList = arrayList;
-}
+    private Context context;
+    private List<NotificationModel> models;
+
+    public NotificationAdapter(Context context, List<NotificationModel> models) {
+        this.context = context;
+        this.models = models;
+    }
 
     @NonNull
     @Override
-    public RecylerviewViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.adapter_notification, parent, false);
-        return new RecylerviewViewholder(v);
+    public NotificationAdapter.RecylerviewViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.adapter_notification, parent, false);
+        return new RecylerviewViewholder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecylerviewViewholder holder, int position) {
-       final RecylerviewViewholder recylerviewViewholder = (RecylerviewViewholder)holder;
-        holder.tvMessage.setText( arrayList.get(position).getMessage());
-        holder.tvTime.setText( arrayList.get(position).getTime());
-        holder.tvTitle.setText( arrayList.get(position).getTitle());
+    public void onBindViewHolder(@NonNull NotificationAdapter.RecylerviewViewholder holder, int position)
+    {
+        holder.timeTv.setText(models.get(position).getDate_time());
+        holder.titleTv.setText(models.get(position).getTitle());
+        holder.messageTv.setText(models.get(position).getDescription());
 
-        if( !arrayList.get(position).getBitmap().equals("")) {
-
+        if(!models.get(position).getImage().equalsIgnoreCase(""))
+        {
             holder.img.setVisibility(View.VISIBLE);
-            Drawable mDefaultBackground = context.getResources().getDrawable(R.drawable.oops);
-            Glide
-                    .with(context)
-                    .load(arrayList.get(position).getBitmap()
-                    ).error(mDefaultBackground).listener(new RequestListener<Drawable>() {
-                @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-
-                    return false;
-                }
-
-                @Override
-                public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                    /* myViewHolder.gif.setVisibility(View.INVISIBLE);*/
-                    return false;
-                }
-            })
+            Glide.with(context)
+                    .load(models.get(position).getImage())
+                    .placeholder(R.drawable.oops)
                     .into(holder.img);
-        }else{
+
+        }
+        else {
             holder.img.setVisibility(View.GONE);
         }
-
-
-        holder.imgDelete.setTag(position);
-        holder.imgDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int pos  = (Integer) view.getTag();
-
-                alertDialogMsg(context,"Do you want to delete notification?","Delete",pos);
-            }
-        });
-
-
 
     }
 
     @Override
     public int getItemCount() {
-        return arrayList.size();
+        return models.size();
     }
 
-    public static class RecylerviewViewholder extends RecyclerView.ViewHolder {
-       TextView tvMessage,tvTime,tvTitle;
-       ImageView imgDelete,img;
+    public class RecylerviewViewholder extends RecyclerView.ViewHolder
+    {
+        TextView timeTv, titleTv, messageTv;
 
+        ImageView img;
 
         public RecylerviewViewholder(@NonNull View itemView) {
             super(itemView);
-            tvMessage = itemView.findViewById(R.id.tvMessage);
-            tvTime = itemView.findViewById(R.id.tvTime);
-            tvTitle = itemView.findViewById(R.id.tvTitle);
-            imgDelete = itemView.findViewById(R.id.imgDelete);
+            timeTv = itemView.findViewById(R.id.timeTv);
+            titleTv = itemView.findViewById(R.id.titleTv);
+            messageTv = itemView.findViewById(R.id.messageTv);
+
             img = itemView.findViewById(R.id.img);
-
         }
-    }
-
-    public void alertDialogMsg(final Context context, String message, String title,final int pos) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-        builder.setMessage(message)
-                .setCancelable(false)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                        arrayList.remove(pos);
-
-                        String json2 = StaticSharedpreference.getInfo("notification", context);
-                        Gson gson = new Gson();
-                        Type type = new TypeToken<ArrayList<NotificationModel>>() {
-                        }.getType();
-                        ArrayList<NotificationModel> arrayList = gson.fromJson(json2, type);
-
-                        arrayList.remove(pos);
-                        Gson gson1 =new Gson();
-                        String specialization = gson1.toJson(arrayList);
-
-                        StaticSharedpreference.saveInfo("notification", specialization, context);
-
-                        notifyDataSetChanged();
-
-                    }
-                })
-
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //  Action for 'NO' Button
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alert = builder.create();
-        //Setting the title manually
-        alert.setTitle(title);
-        alert.show();
-
     }
 
 

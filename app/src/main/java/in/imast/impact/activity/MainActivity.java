@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
 
         packageAppName = new PackageAppName(this);
 
-
         appUpdateManager = AppUpdateManagerFactory.create(this);
         checkForAppUpdate();
 
@@ -111,49 +110,19 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
             startActivity(intent);
             finish();
         }
-        else {
-            /*chekversion*/
-            //CheckVersion();
-        }
 
         Intent intent = getIntent();
         String languageActivity = intent.getStringExtra("fromLanguage");
         String status = intent.getStringExtra("status");
 
-        Log.e("fromLanguage", "" + languageActivity);
-        if (Objects.equals(languageActivity, "yes")) {
-            tabPosition = 0;
-            unselected();
-            imgHome.setBackgroundResource(R.drawable.ic_home_active);
-            tvHome.setTextColor(Color.parseColor("#393185"));
-            HomeFragment homeFragment = new HomeFragment();
-            goToFragment(homeFragment);
-        }
-
-
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if (extras == null) {
-                status = null;
-            } else {
-                status = extras.getString("status");
-            }
-        } else {
-            status = (String) savedInstanceState.getSerializable("status");
-        }
-
-
-        if (status.equalsIgnoreCase("invoice")) {
-
+        // Check if 'status' is null or empty
+        if (status != null && status.equalsIgnoreCase("invoice")) {
             tabPosition = 1;
             unselected();
             imgAttendance.setBackgroundResource(R.drawable.ic_transaction_active);
             tvAttendance.setTextColor(Color.parseColor("#ffcb0d"));
             goToFragment(new WalletFragment());
-        }
-
-        if (status.equalsIgnoreCase("lead")) {
-
+        } else if (status != null && status.equalsIgnoreCase("lead")) {
             tabPosition = 0;
             linearHome.setClickable(false);
             linearAttendance.setClickable(true);
@@ -169,19 +138,15 @@ public class MainActivity extends AppCompatActivity implements SideMenuFragment.
 
             HomeFragment homeFragment = new HomeFragment();
             goToFragment(homeFragment);
+        } else {
+            // Default behavior or handling if 'status' is null
+            tabPosition = 0;
+            unselected();
+            imgHome.setBackgroundResource(R.drawable.ic_home_active);
+            tvHome.setTextColor(Color.parseColor("#393185"));
+            goToFragment(new HomeFragment());
         }
-
-
-        final String acToken = StaticSharedpreference.getInfo("AccessToken", MainActivity.this);
-        Log.e("acToken> ", acToken);
-
-
-
-
-
     }
-
-
 
     private void initView() {
 

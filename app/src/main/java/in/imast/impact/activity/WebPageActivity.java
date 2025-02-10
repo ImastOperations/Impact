@@ -1,5 +1,7 @@
 package in.imast.impact.activity;
 
+import static in.imast.impact.activity.MainActivity.progress;
+
 import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
@@ -16,6 +18,8 @@ import android.webkit.DownloadListener;
 import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -24,6 +28,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import in.imast.impact.Connection.ApiClient;
 import in.imast.impact.R;
 import in.imast.impact.helper.DialogClass;
 import in.imast.impact.helper.StaticSharedpreference;
@@ -36,7 +41,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class WebPageActivity extends AppCompatActivity {
     /*LinearLayout linearBack;*/
-    RelativeLayout relativeCircle, relativeError;
+    RelativeLayout relativeCircle, relativeError, relativeServerError;
     WebView myWebView;
     Button btnTryAgain;
     String checkUrl = "";
@@ -44,10 +49,11 @@ public class WebPageActivity extends AppCompatActivity {
     ProgressBar progress;
     TextView tvTitle;
 
+    int statusCode = 0;
+
     public ValueCallback<Uri[]> uploadMessage;
     public static final int REQUEST_SELECT_FILE = 100;
     private final static int FILECHOOSER_RESULTCODE = 1;
-
 
 
     @Override
@@ -58,10 +64,13 @@ public class WebPageActivity extends AppCompatActivity {
         } else
             setContentView(R.layout.activity_webpage);
 
+        dialogClass = new DialogClass();
+
         tvTitle = findViewById(R.id.tvTitle);
         progress = findViewById(R.id.progress);
         /*linearBack = findViewById(R.id.linearBack);*/
         relativeError = findViewById(R.id.relativeError);
+        relativeServerError = findViewById(R.id.relativeServerError);
         btnTryAgain = findViewById(R.id.btnTryAgain);
         relativeCircle = findViewById(R.id.relativeCircle);
         utilities = new Utilities(this);
@@ -87,6 +96,7 @@ public class WebPageActivity extends AppCompatActivity {
         myWebView.getSettings().setJavaScriptEnabled(true);
         WebSettings ws = myWebView.getSettings();
         ws.setJavaScriptEnabled(true);
+        ws.getDomStorageEnabled();
 
 
         //After Changed to SDK 33
@@ -127,10 +137,18 @@ public class WebPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (utilities.isOnline()) {
-                    recreate();
-                    relativeError.setVisibility(View.GONE);
-                    myWebView.setVisibility(View.VISIBLE);
-
+                    progress.setVisibility(View.GONE);
+                    if(statusCode >= 200 && statusCode < 300)
+                    {
+                        recreate();
+                        relativeError.setVisibility(View.GONE);
+                        myWebView.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        recreate();
+                        relativeServerError.setVisibility(View.GONE);
+                        myWebView.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
@@ -271,6 +289,27 @@ public class WebPageActivity extends AppCompatActivity {
             checkUrl = url;
             super.onPageFinished(view, url);
 
+        }
+        @Override
+        public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+            super.onReceivedHttpError(view, request, errorResponse);
+
+            if(request.getUrl().toString().contains(ApiClient.WEB_BASE_URL))
+            {
+                statusCode = errorResponse.getStatusCode();
+                Log.v("test ", " sdf + :" + statusCode);
+                myWebView.setVisibility(View.GONE);
+                if(statusCode == 401)
+                {
+                    dialogClass.alertDialogAuthentication(WebPageActivity.this);
+                }
+                else {
+                    relativeServerError.setVisibility(View.VISIBLE);
+                }
+            }
+            else {
+                myWebView.setVisibility(View.GONE);
+            }
         }
     }
 

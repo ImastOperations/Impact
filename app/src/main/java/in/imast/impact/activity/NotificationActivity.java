@@ -23,16 +23,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class NotificationActivity extends AppCompatActivity {
-
-
     LinearLayout linearBack;
     RecyclerView recyclerView;
-    TextView tvNo,tvTitle;
+    TextView tvNo, tvTitle;
+
+    ArrayList<NotificationModel> notificationModels = new ArrayList<>();
+    NotificationAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,10 +47,11 @@ public class NotificationActivity extends AppCompatActivity {
         StaticSharedpreference.saveInt("notificationCount", 0, this);
         initViews();
 
-        getNotificationApi();
     }
 
     private void initViews() {
+
+        getNotificationApi();
 
         tvTitle = findViewById(R.id.tvTitle);
         recyclerView = findViewById(R.id.recyclerView);
@@ -56,26 +63,15 @@ public class NotificationActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-                Gson gson = new Gson();
-        String json2 = StaticSharedpreference.getInfo("notification", getApplicationContext());
+        adapter = new NotificationAdapter(this, notificationModels);
+        recyclerView.setAdapter(adapter);
 
-
-        Type type = new TypeToken<ArrayList<NotificationModel>>() {
-        }.getType();
-        ArrayList<NotificationModel> arrayList = gson.fromJson(json2, type);
-
-        if (arrayList != null && !arrayList.equals("") && arrayList.size() != 0) {
-            NotificationAdapter notificationAdapter =new NotificationAdapter(this ,arrayList);
-            recyclerView.setAdapter(notificationAdapter);
-
-        } else {
-            tvNo.setVisibility(View.VISIBLE);
-        }
     }
 
-    private void getNotificationApi()
-    {
+    private void getNotificationApi() {
         ApiClient.getNotification(StaticSharedpreference.getInfo("AccessToken", this), new APIResultLitener<JsonObject>() {
             @Override
             public void onAPIResult(Response<JsonObject> response, String errorMessage) {
@@ -83,18 +79,53 @@ public class NotificationActivity extends AppCompatActivity {
                 try {
                     if (response != null && errorMessage == null) {
 
-                        if (response.code() == 200)
-                        {
-                            Log.v("test ", "test : "+ response.body());
+                        if (response.code() == 200) {
+                            notificationModels.clear();
+
+                            String status = String.valueOf(Objects.requireNonNull(response.body()).get("status"));
+                            String status1 = status.replace("\"", "");
+                            String message = String.valueOf(Objects.requireNonNull(response.body()).get("status"));
+
+                            JSONObject jsonObject = null;
+                            if (status1.equalsIgnoreCase("success")) {
+
+                                try {
+                                    jsonObject = new JSONObject(String.valueOf(response.body()));
+                                    JSONArray data_response = jsonObject.getJSONArray("data");
+
+                                    if(data_response != null && data_response.length() > 0)
+                                    {
+                                        tvNo.setVisibility(View.GONE);
+
+                                        for (int i = 0; i < data_response.length(); i++) {
+                                            JSONObject data = data_response.getJSONObject(i);
+                                            NotificationModel model = new NotificationModel();
+
+                                            model.setTitle(data.optString("title"));
+                                            model.setDescription(data.optString("description"));
+                                            model.setDate_time(data.optString("date_time"));
+                                            model.setImage(data.optString("image"));
+
+                                            notificationModels.add(model);
+                                        }
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                    else {
+                                        tvNo.setVisibility(View.VISIBLE);
+                                        tvNo.setText(message);
+                                    }
+
+                                } catch (JSONException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
 
                         }
-
                     }
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
     }
- }
+}

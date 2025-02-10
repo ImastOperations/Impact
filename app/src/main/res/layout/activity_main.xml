@@ -36,7 +36,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
-                android:text="SAVE"
+                android:text="@string/save"
                 android:textColor="@color/yellow"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -151,7 +151,7 @@
                 android:id="@+id/tvHome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Home"
+                android:text="@string/home"
                 android:textColor="@color/yellow"
                 android:textSize="12sp"
                 android:visibility="visible" />

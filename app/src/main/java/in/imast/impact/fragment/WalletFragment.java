@@ -9,13 +9,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import in.imast.impact.Connection.ApiClient;
 import in.imast.impact.R;
 import in.imast.impact.helper.DialogClass;
 import in.imast.impact.helper.StaticSharedpreference;
+import in.imast.impact.helper.Utilities;
+
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.HashMap;
@@ -30,15 +36,23 @@ public class WalletFragment extends Fragment {
     //Declaration of variables
     private View parentView;
     private Context context;
+
+    Utilities utilities;
     DialogClass dialogClass;
     Dialog dialog;
     public static final int SPLASH_DELAY = 2; // in second
     public static WalletFragment newInstance() {
         return new WalletFragment();
     }
+
     HashMap<String, String> headers;
     View view;
     WebView webView;
+    private Button btnTryAgain;
+    private RelativeLayout relativeServerError,relativeError;
+
+    private int statusCode = 0;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -56,10 +70,55 @@ public class WalletFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
       //  setHasOptionsMenu(true);
         context = getActivity();
+        dialogClass = new DialogClass();
+        utilities = new Utilities(getActivity());
+
+        init();
+
+    }
+
+    private void init()
+    {
         webView = view.findViewById(R.id.webView);
+        btnTryAgain = view.findViewById(R.id.btnTryAgain);
+        relativeError = view.findViewById(R.id.relativeError);
+        relativeServerError = view.findViewById(R.id.relativeServerError);
+
+        if(utilities.isOnline())
+        {
+            setWebView();
+        }else {
+            relativeError.setVisibility(View.VISIBLE);
+            webView.setVisibility(View.GONE);
+        }
+
+        btnTryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (utilities.isOnline()) {
+                    progress.setVisibility(View.GONE);
+                    if(statusCode >= 200 && statusCode < 300)
+                    {
+                        getActivity().recreate();
+                        relativeError.setVisibility(View.GONE);
+                        webView.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        getActivity().recreate();
+                        relativeServerError.setVisibility(View.GONE);
+                        webView.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+    }
+
+    private void setWebView()
+    {
         webView.clearCache(true);
         webView.getSettings().setLoadsImagesAutomatically(true);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().getDomStorageEnabled();
         webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         final String acToken = StaticSharedpreference.getInfo("AccessToken", getActivity());
         headers = new HashMap<>();
@@ -68,7 +127,7 @@ public class WalletFragment extends Fragment {
         // String basicAuthHeader = android.util.Base64.encodeToString((username + ":" + password).getBytes(), android.util.Base64.NO_WRAP);
         headers.put("Authorization", acToken);
         headers.put("Accept-Language", StaticSharedpreference.getInfo("language",getContext()));
-       // view.loadUrl(url, headers);
+        // view.loadUrl(url, headers);
         webView.loadUrl(ApiClient.WEB_BASE_URL+"transaction",headers);
         webView.setWebViewClient(new CustomWebViewClient());
         webView.setWebChromeClient(new WebChromeClient(){
@@ -77,6 +136,13 @@ public class WalletFragment extends Fragment {
                 super.onProgressChanged(view, newProgress);
                 if(newProgress==100){
                     progress.setVisibility(View.GONE);
+                    if(statusCode >= 400  && statusCode <= 500)
+                    {
+                        webView.setVisibility(View.GONE);
+                    }
+                    else {
+                        webView.setVisibility(View.VISIBLE);
+                    }
                 }else{
                     progress.setProgress(newProgress);
                     progress.setVisibility(View.VISIBLE);
@@ -107,6 +173,29 @@ public class WalletFragment extends Fragment {
         public void onPageFinished(WebView view, String url) {
             Log.v("akram", "url3" + url);
             super.onPageFinished(view, url);
+        }
+
+        @Override
+        public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+            super.onReceivedHttpError(view, request, errorResponse);
+
+            if(request.getUrl().toString().contains(ApiClient.WEB_BASE_URL))
+            {
+                statusCode = errorResponse.getStatusCode();
+                Log.v("test ", " sdf + :" + statusCode);
+                webView.setVisibility(View.GONE);
+
+                if(statusCode == 401)
+                {
+                    dialogClass.alertDialogAuthentication(getActivity());
+                }
+                else {
+                    relativeServerError.setVisibility(View.VISIBLE);
+                }
+            }
+            else {
+                webView.setVisibility(View.GONE);
+            }
         }
     }
  }

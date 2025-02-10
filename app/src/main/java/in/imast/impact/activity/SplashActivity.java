@@ -32,19 +32,28 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-
-
-
     private void checkLoginAvailability(){
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 if (!StaticSharedpreference.getInfo("AccessToken",SplashActivity.this).equals("")
                 && StaticSharedpreference.getInfo("user_verify", SplashActivity.this).equalsIgnoreCase("true")){
-                    startActivity(new Intent(SplashActivity.this,MainActivity.class)
-                            .putExtra("status",""));
-                    finish();
-                }else{
+
+                    startActivity(new Intent(SplashActivity.this, KycVerifyActivity.class));
+                    finishAffinity();
+
+                    /*if(!StaticSharedpreference.getInfo("kyc_complete", SplashActivity.this).equalsIgnoreCase("Done"))
+                    {
+                        startActivity(new Intent(SplashActivity.this, KycVerifyActivity.class));
+                        finishAffinity();
+                    }
+                    else {
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class)
+                                .putExtra("status",""));
+                        finishAffinity();
+                    }*/
+                }else
+                {
                     startActivity(new Intent(SplashActivity.this,WelcomeScreen.class));
                     finish();
                 }

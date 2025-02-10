@@ -423,6 +423,23 @@ public class ApiClient {
         apiResponseCall.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, retrofit2.Response<JsonObject> response) {
+                resultLitener.onAPIResult(response, null);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                resultLitener.onAPIResult(null, t.getMessage());
+            }
+        });
+    }
+
+    //check kyc
+    public static void checkKyc(String header, Map<String, String> queryParams, final APIResultLitener<JsonObject> resultLitener) {
+        Call<JsonObject> apiResponseCall = getBaseApiServiceInstance1().check_kyc(header, queryParams);
+
+        apiResponseCall.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, retrofit2.Response<JsonObject> response) {
 
                 resultLitener.onAPIResult(response, null);
             }
@@ -433,5 +450,75 @@ public class ApiClient {
             }
         });
     }
+
+
+    public static void gstin_kyc(String header, Map<String, String> queryParams, final APIResultLitener<JsonObject> resultLitener) {
+        Call<JsonObject> apiResponseCall = getBaseApiServiceInstance1().gstin_kyc(header, queryParams);
+
+        apiResponseCall.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, retrofit2.Response<JsonObject> response) {
+
+                resultLitener.onAPIResult(response, null);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                resultLitener.onAPIResult(null, t.getMessage());
+            }
+        });
+    }
+
+    public static void submitGstin(String header, Map<String, String> queryParams, final APIResultLitener<JsonObject> resultLitener) {
+        Call<JsonObject> apiResponseCall = getBaseApiServiceInstance1().submitGstin(header, queryParams);
+
+        apiResponseCall.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, retrofit2.Response<JsonObject> response) {
+
+                resultLitener.onAPIResult(response, null);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                resultLitener.onAPIResult(null, t.getMessage());
+            }
+        });
+    }
+
+    public static void verifyAadharOtp(String header, Map<String, String> queryParams, final APIResultLitener<JsonObject> resultLitener) {
+        Call<JsonObject> apiResponseCall = getBaseApiServiceInstance1().verifyAadharOtp(header, queryParams);
+
+        apiResponseCall.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, retrofit2.Response<JsonObject> response) {
+
+                resultLitener.onAPIResult(response, null);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                resultLitener.onAPIResult(null, t.getMessage());
+            }
+        });
+    }
+
+    public static void sendAadharOTP(String header, Map<String, String> queryParams, final APIResultLitener<JsonObject> resultLitener) {
+        Call<JsonObject> apiResponseCall = getBaseApiServiceInstance1().sendAadharOTP(header, queryParams);
+
+        apiResponseCall.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, retrofit2.Response<JsonObject> response) {
+
+                resultLitener.onAPIResult(response, null);
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                resultLitener.onAPIResult(null, t.getMessage());
+            }
+        });
+    }
+
 
 }

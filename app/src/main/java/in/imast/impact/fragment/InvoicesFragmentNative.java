@@ -114,6 +114,7 @@ public class InvoicesFragmentNative extends Fragment implements MasterSelectedPr
     ImageView img1, img2, img3, img4, img5;
 
     CardView imgAttachment;
+    private static final int REQUEST_STORAGE_PERMISSION = 100;
 
     EditText edtInvoiceNumber;
     public static TextView tvTotalQty, tvTotalRate, tvPath;
@@ -160,6 +161,7 @@ public class InvoicesFragmentNative extends Fragment implements MasterSelectedPr
         // Toast.makeText(getContext(), "123", Toast.LENGTH_SHORT).show();
         utilities = new Utilities(getActivity());
         dialogClass = new DialogClass();
+        checkPermission();
 
         productId.clear();
         productSelectedModels.clear();
@@ -247,7 +249,8 @@ public class InvoicesFragmentNative extends Fragment implements MasterSelectedPr
 
                             e.printStackTrace();
                         }
-                    } else {
+                    }
+                    else {
 
                     }
                 } catch (Exception e) {
@@ -303,7 +306,7 @@ public class InvoicesFragmentNative extends Fragment implements MasterSelectedPr
                             e.printStackTrace();
                         }
                     } else {
-
+                        dialogClass.alertDialogAuthentication(getActivity());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -401,13 +404,6 @@ public class InvoicesFragmentNative extends Fragment implements MasterSelectedPr
         });
 
         img1 = view.findViewById(R.id.img1);
-        img2 = view.findViewById(R.id.img2);
-        img3 = view.findViewById(R.id.img3);
-        img4 = view.findViewById(R.id.img4);
-        img5 = view.findViewById(R.id.img5);
-
-        relativeImagesFirst = view.findViewById(R.id.relativeImagesFirst);
-        relativeImagesSecond = view.findViewById(R.id.relativeImagesSecond);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         rvProduct.setLayoutManager(linearLayoutManager);
@@ -444,17 +440,17 @@ public class InvoicesFragmentNative extends Fragment implements MasterSelectedPr
             @Override
             public void onClick(View view) {
                 if (tvInvoiceDate.getText().toString().equals("DD/MM/YYYY")) {
-                    Toast.makeText(getActivity(), "Please select invoice date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please select invoice date.", Toast.LENGTH_SHORT).show();
                 } else if (edtInvoiceNumber.getText().toString().equals("")) {
-                    Toast.makeText(getActivity(), "Please enter invoice number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please enter invoice number.", Toast.LENGTH_SHORT).show();
                 } else if (distributer_iddd.equals("")) {
-                    Toast.makeText(getActivity(), "Please select distributer", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please select distributer.", Toast.LENGTH_SHORT).show();
                 } else if (asm_iddd.equals("")) {
-                    Toast.makeText(getActivity(), "Please select area sales manager", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please select area sales manager.", Toast.LENGTH_SHORT).show();
                 } else if (document_image_path.equals("")) {
-                    Toast.makeText(getActivity(), "Please select invoice image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please select invoice file.", Toast.LENGTH_SHORT).show();
                 } else if (edtInvoiceNumber.getText().toString().equals("")) {
-                    Toast.makeText(getActivity(), "Please enter invoice number", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Please enter invoice number.", Toast.LENGTH_SHORT).show();
                 } else {
                     InvoiceSubmit();
                     // siteMedia(true);
@@ -556,15 +552,14 @@ public class InvoicesFragmentNative extends Fragment implements MasterSelectedPr
             attachment = MultipartBody.Part.createFormData("invoice_image", cleanedFileName, requestBody);
         }
 
-        Log.v("test : ", "attachment " + attachment);
-
         ApiClient.add_invoice(StaticSharedpreference.getInfo("AccessToken", getActivity()), distributer_iddd__, asm_iddd__, edtInvoiceNumber__, invoice_date
                 , attachment, new APIResultLitener<JsonObject>() {
                     @Override
                     public void onAPIResult(Response<JsonObject> response, String errorMessage) {
 
                         try {
-                            if (response.isSuccessful() && response.body() != null) {
+                            if (response.isSuccessful() && response.body() != null)
+                            {
                                 mediaText = "";
                                 String status = String.valueOf(response.body().get("status")).replace("\"", "");
 
@@ -579,7 +574,8 @@ public class InvoicesFragmentNative extends Fragment implements MasterSelectedPr
                                     Toast.makeText(getContext(), invoiceMessage, Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                 }
-                            } else {
+                            }
+                            else {
                                 Log.e("API Error", "Response unsuccessful or body is null. Error message: " + errorMessage);
                                 Toast.makeText(getContext(), "Submission failed. Please try again.", Toast.LENGTH_SHORT).show();
                                 dialog.dismiss();
@@ -770,6 +766,8 @@ public class InvoicesFragmentNative extends Fragment implements MasterSelectedPr
         if (resultCode == RESULT_OK) {
 
             if (requestCode == SELECT_FILE) {
+                tvPath.setText("");
+                tvPath.setVisibility(View.GONE);
                 document_image_path = DataManager.getInstance().getRealPathFromURI(getActivity(), data.getData());
                 File file1 = new File(document_image_path);
                 aadharBitmap = BitmapFactory.decodeFile(file1.getAbsolutePath());
@@ -783,6 +781,8 @@ public class InvoicesFragmentNative extends Fragment implements MasterSelectedPr
 
 
             } else if (requestCode == INTENTCAMERA) {
+                tvPath.setText("");
+                tvPath.setVisibility(View.GONE);
                 if (resultCode == Activity.RESULT_OK) {
 
                     document_image_path = data.getSerializableExtra("image").toString();
@@ -797,6 +797,7 @@ public class InvoicesFragmentNative extends Fragment implements MasterSelectedPr
                     }
                 }
             } else if (requestCode == PICK_PDF_REQUEST) {
+                image_view.setImageBitmap(null);
                 document_image_path = data.getData().toString();
                 Uri uri = data.getData();
                 File file1 = new File(document_image_path);
@@ -936,6 +937,8 @@ public class InvoicesFragmentNative extends Fragment implements MasterSelectedPr
             ActivityCompat.requestPermissions(getActivity(), PERMISSIONS, PERMISSION_ALL);
         }
     }
+
+
 
     @Override
     public void onStart() {

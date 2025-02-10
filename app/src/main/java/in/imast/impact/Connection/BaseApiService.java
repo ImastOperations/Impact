@@ -86,7 +86,6 @@ public interface BaseApiService {
     @GET("v2/native/asm-list")
     Call<JsonObject> get_area_sales(@Header("Authorization") String authorization, @QueryMap Map<String, String> queryParams);
 
-
     @GET("v2/native/distributors-list")
     Call<JsonObject> get_distributer(@Header("Authorization") String authorization, @QueryMap Map<String, String> queryParams);
 
@@ -96,6 +95,29 @@ public interface BaseApiService {
 
     @GET("v2/native/get-notification")
     Call<JsonObject> getNotification(@Header("Authorization") String authorization);
+
+    //check kyc
+    @GET("v2/native/manage-kyc-modal")
+    Call<JsonObject> check_kyc(@Header("Authorization") String authorization, @QueryMap Map<String, String> queryParams);
+
+    @FormUrlEncoded
+    @POST("v2/native/submit-gstin")
+    Call<JsonObject> submitGstin(@Header("Authorization") String authorization, @FieldMap Map<String, String> queryParams);
+
+    @FormUrlEncoded
+    @POST("v2/native/send-aadhar-otp")
+    Call<JsonObject> sendAadharOTP(@Header("Authorization") String authorization, @FieldMap Map<String, String> queryParams);
+
+    @FormUrlEncoded
+    @POST("v2/native/verify-aadhar-otp")
+    Call<JsonObject> verifyAadharOtp(@Header("Authorization") String authorization, @FieldMap Map<String, String> queryParams);
+
+
+    @GET("v2/native/get-pan-gstin-kyc")
+    Call<JsonObject> gstin_kyc(@Header("Authorization") String authorization, @QueryMap Map<String, String> queryParams);
+
+
+
 
 
 }

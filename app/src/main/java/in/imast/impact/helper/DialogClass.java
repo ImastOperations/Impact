@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -61,6 +62,10 @@ public class DialogClass {
     }
 
     public  void alertDialogAuthentication(final Activity activity) {
+        if (activity == null || activity.isFinishing()) {
+            Log.e("DialogClass", "Activity is null or finishing, cannot show dialog.");
+            return;
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setMessage("Please login again")
                 .setCancelable(false)
